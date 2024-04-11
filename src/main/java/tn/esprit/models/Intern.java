@@ -1,7 +1,7 @@
 package tn.esprit.models;
 
 public class Intern {
-    private int id ,user_id;
+    private int id ,user_id,usk;
     private String cin_passport,studylevel,speciality, sector;
     private String procontact,latitude,longitude,profileimage;
     public Intern(int id, int user_id, String cin_passport, String studylevel, String speciality,
