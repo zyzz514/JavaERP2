@@ -17,8 +17,21 @@ public class MainFx extends Application {
     @Override
     public void start(Stage primaryStage) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/AfficherIntern.fxml"));
+        try {
+            Parent root = loader.load();
+            Scene scene = new Scene(root );
 
+            primaryStage.setTitle("Gestion Personne");
+            primaryStage.setScene(scene);
+            primaryStage.show();
+
+
+
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
 
 
     }
 }
+
