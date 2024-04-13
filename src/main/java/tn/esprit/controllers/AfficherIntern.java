@@ -1,3 +1,4 @@
+
 package tn.esprit.controllers;
 
 import javafx.fxml.FXML;
@@ -9,16 +10,16 @@ import java.util.ResourceBundle;
 
 public class AfficherIntern implements Initializable {
 
-    @FXML
-    private Label lbPersones;
+   @FXML
+   private Label lbIntern;
 
-    public void setLbPersones(String lbPersones) {
-        this.lbPersones.setText(lbPersones);
-    }
+   public void setLbIntern(String lbIntern) {
+      this.lbIntern.setText(lbIntern);
+   }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+   @Override
+   public void initialize(URL url, ResourceBundle resourceBundle) {
 
-    }
+   }
 }
 
