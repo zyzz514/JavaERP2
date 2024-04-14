@@ -8,14 +8,32 @@
 <?import javafx.scene.control.TableView?>
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.AjouterIntern">
     <children>
-        <TextField fx:id="cinP" layoutX="178.0" layoutY="82.0" />
-        <TextField fx:id="studyLeV" layoutX="178.0" layoutY="147.0" />
-        <TextField fx:id="special" layoutX="178.0" layoutY="208.0" />
-        <TableView  fx:id="tab" layoutX="200.0" layoutY="220.1"/>
-        <Label layoutX="74.0" layoutY="151.0" text="Cin Passport" />
-        <Label layoutX="74.0" layoutY="212.0" text="Study Level" />
-        <Label layoutX="74.0" layoutY="86.0" text="Speciality" textFill="RED" />
+        <Label layoutX="74.0" layoutY="50.0" text="Ajouter Intern" textFill="LIGHTSKYBLUE" style="-fx-font-size: 18px;"/>
+        <TextField fx:id="user_id" layoutX="178.0" layoutY="86.0" />
+        <TextField fx:id="cinP" layoutX="178.0" layoutY="110.0" />
+        <TextField fx:id="studyLeV" layoutX="178.0" layoutY="160.0" />
+        <TextField fx:id="special" layoutX="178.0" layoutY="210.0" />
+        <TextField fx:id="sector" layoutX="178.0" layoutY="260.0" />
+        <TextField fx:id="procontact" layoutX="178.0" layoutY="310.0" />
+        <TextField fx:id="latitude" layoutX="178.0" layoutY="360.0" />
+        <TextField fx:id="longitude" layoutX="178.0" layoutY="410.0" />
+        <TextField fx:id="profileimage" layoutX="178.0" layoutY="460.0" />
+        <TableView fx:id="tab" layoutX="178.0" layoutY="505.0"/>
+
+
+        <Label layoutX="74.0" layoutY="86.0" text="User id" />
+        <Label layoutX="74.0" layoutY="110.0" text="Cin Passport" />
+        <Label layoutX="74.0" layoutY="160.0" text="Study Level" />
+        <Label layoutX="74.0" layoutY="210.0" text="Speciality" textFill="RED" />
+        <Label layoutX="74.0" layoutY="260.0" text="Sector" />
+        <Label layoutX="74.0" layoutY="310.0" text="Pro Contact" />
+        <Label layoutX="74.0" layoutY="360.0" text="Latitude" />
+        <Label layoutX="74.0" layoutY="410.0" text="Longitude" />
+        <Label layoutX="74.0" layoutY="460.0" text="ProfileImage" />
+
+
         <Button layoutX="409.0" onAction="#afficherIntern">afficher</Button>
+        <Button layoutX="470.0" onAction="#ajouterIntern">ajouter</Button>
     </children>
 
 

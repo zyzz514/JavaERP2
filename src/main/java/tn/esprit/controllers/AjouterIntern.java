@@ -10,8 +10,7 @@ import tn.esprit.models.Intern;
 import tn.esprit.services.ServiceIntern;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
+
 
 public class AjouterIntern  {
 
@@ -26,7 +25,25 @@ public class AjouterIntern  {
 
     @FXML
     private TextField special;
-    ServiceIntern intern = new ServiceIntern();
+
+    @FXML
+    private TextField user_id;
+
+    @FXML
+    private TextField sector;
+
+    @FXML
+    private TextField procontact;
+
+    @FXML
+    private TextField latitude;
+
+    @FXML
+    private TextField longitude;
+
+    @FXML
+    private TextField profileimage;
+    ServiceIntern i = new ServiceIntern();
     @FXML
     void afficherIntern(ActionEvent event) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/AfficherIntern.fxml"));
@@ -35,7 +52,7 @@ public class AjouterIntern  {
             Parent root = loader.load();
             AfficherIntern ai = loader.getController();
 
-            ai.setLbIntern(intern.getAll().toString());
+            ai.setLbIntern(i.getAll().toString());
             tab.getScene().setRoot(root);
 
         }catch (IOException e){
@@ -43,5 +60,35 @@ public class AjouterIntern  {
         }
 
     }
+
+    @FXML
+    void ajouterIntern(ActionEvent event) {
+
+        Intern p = new Intern();
+
+        p.setUser_id(Integer.parseInt(user_id.getText()));
+        p.setCin_passport(cinP.getText());
+        p.setStudylevel(studyLeV.getText());
+        p.setSpeciality(special.getText());
+        p.setSector(sector.getText());
+        p.setProcontact(procontact.getText());
+        p.setLatitude(latitude.getText());
+        p.setLongitude(longitude.getText());
+        p.setProfileimage(profileimage.getText());
+
+        i.add(p);
+
+        user_id.clear();
+        cinP.clear();
+        studyLeV.clear();
+        special.clear();
+        sector.clear();
+        procontact.clear();
+        latitude.clear();
+        longitude.clear();
+        profileimage.clear();
+
+    }
+
 
 }
