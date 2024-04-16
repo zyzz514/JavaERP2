@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="630.0" prefWidth="680.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.AjouterIntern">
+    <children>
+        <Label layoutX="73.0" layoutY="33.0" style="-fx-font-size: 18px;" text="Ajouter Intern" textFill="#301ad7" />
+        <TextField fx:id="user_id" layoutX="178.0" layoutY="86.0" />
+        <TextField fx:id="cinP" layoutX="178.0" layoutY="136.0" />
+        <TextField fx:id="studyLeV" layoutX="178.0" layoutY="187.0" />
+        <TextField fx:id="special" layoutX="178.0" layoutY="240.0" />
+        <TextField fx:id="sector" layoutX="178.0" layoutY="289.0" />
+        <TextField fx:id="procontact" layoutX="178.0" layoutY="340.0" />
+        <TextField fx:id="latitude" layoutX="178.0" layoutY="390.0" />
+        <TextField fx:id="longitude" layoutX="178.0" layoutY="443.0" />
+        <TextField fx:id="profileimage" layoutX="178.0" layoutY="494.0" />
+
+
+
+        <Label layoutX="74.0" layoutY="86.0" text="User id" />
+        <Label layoutX="71.0" layoutY="140.0" text="Cin Passport" />
+        <Label layoutX="68.0" layoutY="191.0" text="Study Level" />
+        <Label layoutX="79.0" layoutY="244.0" text="Speciality" textFill="#0d0d0d" />
+        <Label layoutX="82.0" layoutY="293.0" text="Sector" />
+        <Label layoutX="73.0" layoutY="344.0" text="Pro Contact" />
+        <Label layoutX="77.0" layoutY="394.0" text="Latitude" />
+        <Label layoutX="77.0" layoutY="447.0" text="Longitude" />
+        <Label layoutX="74.0" layoutY="498.0" text="ProfileImage" />
+
+
+        <Button fx:id="afficher" layoutX="407.0" layoutY="86.0" onAction="#afficherIntern">afficher</Button>
+        <Button layoutX="484.0" layoutY="86.0" onAction="#ajouterIntern">ajouter</Button>
+    </children>
+
+
+
+</AnchorPane>
