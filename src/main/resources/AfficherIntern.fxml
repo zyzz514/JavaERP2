@@ -5,23 +5,25 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="494.0" prefWidth="722.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.AfficherIntern">
+<?import javafx.scene.control.skin.TabPaneSkin.TabControlButtons?>
+<AnchorPane prefHeight="494.0" prefWidth="787.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.AfficherIntern">
 
     <children>
-        <TableView fx:id="tab" layoutX="25.0" layoutY="28.0" prefHeight="398.0" prefWidth="671.0">
+        <TableView fx:id="tab" layoutX="25.0" layoutY="28.0" prefHeight="398.0" prefWidth="744.0">
             <columns>
-                <TableColumn prefWidth="75.0" text="user_id" fx:id="userIdColumn"/>
-                <TableColumn prefWidth="75.0" text="passport" fx:id="passportColumn" />
-                <TableColumn prefWidth="75.0" text="study"  fx:id="studyColumn"/>
-                <TableColumn prefWidth="75.0" text="speciality"  fx:id="specialityColumn"/>
-                <TableColumn prefWidth="75.0" text="sector"  fx:id="sectorColumn"/>
-                <TableColumn prefWidth="75.0" text="pro" fx:id="proColumn"/>
-                <TableColumn prefWidth="75.0" text="latitude" fx:id="latitudeColumn"/>
-                <TableColumn prefWidth="75.0" text="longitude" fx:id="longitudeColumn"/>
-                <TableColumn prefWidth="67.199951171875" text="image" fx:id="imageColumn"/>
+                <TableColumn fx:id="userIdColumn" prefWidth="75.0" text="user_id" />
+                <TableColumn fx:id="passportColumn" prefWidth="75.0" text="passport" />
+                <TableColumn fx:id="studyColumn" prefWidth="75.0" text="study" />
+                <TableColumn fx:id="specialityColumn" prefWidth="75.0" text="speciality" />
+                <TableColumn fx:id="sectorColumn" prefWidth="75.0" text="sector" />
+                <TableColumn fx:id="proColumn" prefWidth="75.0" text="pro" />
+                <TableColumn fx:id="latitudeColumn" prefWidth="75.0" text="latitude" />
+                <TableColumn fx:id="longitudeColumn" prefWidth="75.0" text="longitude" />
+                <TableColumn fx:id="imageColumn" prefWidth="67.199951171875" text="image" />
+                <TableColumn fx:id="deleteColumn" prefWidth="75.0" text="Delete" />
             </columns>
         </TableView>
-      <Button fx:id="button" layoutX="335.0" layoutY="441.0" mnemonicParsing="false" onAction="#ajouterIntern" prefHeight="42.0" prefWidth="70.0" style="-fx-border-radius: 10px;" stylesheets="@../java/tn/esprit/css/style.css" text=" ajouter   &#10;  intern&#10;" />
+      <Button fx:id="ajouter" layoutX="335.0" layoutY="441.0" mnemonicParsing="false" onAction="#ajouterIntern" prefHeight="42.0" prefWidth="70.0" style="-fx-border-radius: 10px;" text=" ajouter   &#10;  intern&#10;" />
     </children>
 
 </AnchorPane>

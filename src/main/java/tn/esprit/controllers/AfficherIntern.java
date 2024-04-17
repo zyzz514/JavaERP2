@@ -6,10 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import tn.esprit.models.Intern;
 import tn.esprit.services.ServiceIntern;
@@ -18,6 +15,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class AfficherIntern {
@@ -56,7 +54,31 @@ public class AfficherIntern {
     @FXML
     private Button ajouter;
 
+    @FXML
+    private TableColumn<Intern, Void> deleteColumn;
 
+
+
+    private void deleteIntern(Intern intern) {
+
+
+            // Display confirmation dialog
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation");
+            alert.setHeaderText("Confirm Deletion");
+            alert.setContentText("Are you sure you want to delete this intern?");
+            Optional<ButtonType> result = alert.showAndWait();
+
+            // If user confirms deletion, proceed
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                // Delete intern from the database
+                serviceIntern.delete(intern.getId());
+
+                // Remove intern from TableView
+                tab.getItems().remove(intern);
+            }
+
+        }
     @FXML
     public void initialize() {
         // Initialize TableView columns
@@ -72,7 +94,29 @@ public class AfficherIntern {
 
         List<Intern> internList = serviceIntern.getAll(); // Assuming getAll() retrieves all interns from the database
         tab.getItems().addAll(internList);
+
+        deleteColumn.setCellFactory(param -> new TableCell<Intern, Void>() {
+            private final Button deleteButton = new Button("Delete");
+
+            {
+                deleteButton.setOnAction(event -> {
+                    Intern intern = getTableView().getItems().get(getIndex());
+                    deleteIntern(intern);
+                });
+            }
+                @Override
+                protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(deleteButton);
+                }
+            }
+            });
     }
+
+
 
     @FXML
     void ajouterIntern() throws IOException {
@@ -86,5 +130,6 @@ public class AfficherIntern {
 
     public void main() {
     }
+
 
 }
