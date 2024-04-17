@@ -1,15 +1,28 @@
 package tn.esprit.models;
 
-public class Intern {
-    private int id ,user_id;
-    private String cin_passport,studylevel,speciality, sector;
-    private String procontact,latitude,longitude,profileimage;
-    public Intern(int id, int user_id, String cin_passport, String studylevel, String speciality,
-                  String sector, String procontact, String latitude, String longitude, String profileimage) {
+import javafx.beans.property.*;
 
+public class Intern {
+    private int id;
+    private final IntegerProperty user_id = new SimpleIntegerProperty();
+    private String cin_passport;
+    private String studylevel;
+    private String speciality;
+    private String sector;
+    private String procontact;
+    private String latitude;
+    private String longitude;
+    private String profileimage;
+
+
+public Intern(){
+
+}
+    public Intern(int id, int userId, String cinPassport, String studylevel, String speciality,
+                  String sector, String procontact, String latitude, String longitude, String profileimage) {
         this.id = id;
-        this.user_id = user_id;
-        this.cin_passport = cin_passport;
+        this.user_id.set(userId);
+        this.cin_passport = cinPassport;
         this.studylevel = studylevel;
         this.speciality = speciality;
         this.sector = sector;
@@ -19,17 +32,11 @@ public class Intern {
         this.profileimage = profileimage;
     }
 
-    public Intern( int user_id, String cin_passport, String studylevel, String speciality,
+    public Intern(int userId, String cinPassport, String studylevel, String speciality,
                   String sector, String procontact, String latitude, String longitude, String profileimage) {
-
-
-        if (isValidStudyLevel(studylevel)) {
-            this.studylevel = studylevel;
-        } else {
-            throw new IllegalArgumentException("Invalid study level: " + studylevel);
-        }
-        this.user_id = user_id;
-        this.cin_passport = cin_passport;
+        this.user_id.set(userId);
+        this.cin_passport = cinPassport;
+        this.studylevel = studylevel;
         this.speciality = speciality;
         this.sector = sector;
         this.procontact = procontact;
@@ -37,29 +44,17 @@ public class Intern {
         this.longitude = longitude;
         this.profileimage = profileimage;
     }
-    private boolean isValidStudyLevel(String studylevel) {
-
-        return studylevel != null && (studylevel.equals("Bachelor") || studylevel.equals("Master") || studylevel.equals("PhD"));
-    }
-
-    public Intern() {
-
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public int getUser_id() {
+        return user_id.get();
+    }
+
+    public IntegerProperty user_idProperty() {
         return user_id;
     }
 
     public void setUser_id(int user_id) {
-        this.user_id = user_id;
+        this.user_id.set(user_id);
     }
 
     public String getCin_passport() {
@@ -67,23 +62,9 @@ public class Intern {
     }
 
     public void setCin_passport(String cin_passport) {
-        if (validateCinPassport(cin_passport)) {
-            this.cin_passport = cin_passport;
-        } else {
-            throw new IllegalArgumentException("Invalid value for cin_passport: " + cin_passport);
-        }
+        this.cin_passport = cin_passport;
     }
 
-    private boolean validateCinPassport(String cin_passport) {
-        boolean isValid = true;
-
-        // Validate each field individually
-        if (cin_passport == null || cin_passport.isEmpty()) {
-            System.out.println("CIN/passport is required.");
-            isValid = false;
-        }
-        return isValid;
-    }
     public String getStudylevel() {
         return studylevel;
     }
@@ -140,6 +121,67 @@ public class Intern {
         this.profileimage = profileimage;
     }
 
+    public IntegerProperty userIdProperty() {
+        return user_id;
+    }
+
+    public StringProperty cinPassportProperty() {
+        return new SimpleStringProperty(cin_passport);
+    }
+
+    public StringProperty studylevelProperty() {
+        return new SimpleStringProperty(studylevel);
+    }
+
+    public StringProperty specialityProperty() {
+        return new SimpleStringProperty(speciality);
+    }
+
+    public StringProperty sectorProperty() {
+        return new SimpleStringProperty(sector);
+    }
+
+    public StringProperty procontactProperty() {
+        return new SimpleStringProperty(procontact);
+    }
+
+    public StringProperty latitudeProperty() {
+        return new SimpleStringProperty(latitude);
+    }
+
+    public StringProperty longitudeProperty() {
+        return new SimpleStringProperty(longitude);
+    }
+
+    public StringProperty profileimageProperty() {
+        return new SimpleStringProperty(profileimage);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getUserId() {
+        return user_id.get();
+    }
+
+    public void setUserId(int userId) {
+        this.user_id.set(userId);
+    }
+
+    public String getCinPassport() {
+        return cin_passport;
+    }
+
+    public void setCinPassport(String cinPassport) {
+        this.cin_passport = cinPassport;
+    }
+
+    // Add similar getter and setter methods for other fields...
     @Override
     public String toString() {
         return "intern{" +
@@ -155,5 +197,5 @@ public class Intern {
                 ", profileimage='" + profileimage + '\'' +
                 '}';
     }
-
 }
+
