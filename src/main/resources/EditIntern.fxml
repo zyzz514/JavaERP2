@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="tn.esprit.controllers.EditIntern"
+      prefWidth="300" prefHeight="400" alignment="CENTER" spacing="10">
+
+    <!-- User ID -->
+    <HBox spacing="10">
+        <Label text="User ID:" />
+        <TextField fx:id="userIdField" />
+    </HBox>
+
+    <!-- Passport -->
+    <HBox spacing="10">
+        <Label text="Passport:" />
+        <TextField fx:id="passportField" />
+    </HBox>
+
+    <!-- Other attributes (study, speciality, sector, pro, latitude, longitude, image, etc.) -->
+    <!-- Add similar HBox elements for other attributes -->
+
+    <!-- Save and Cancel buttons -->
+    <HBox spacing="10">
+        <Button text="Save" onAction="#saveChanges" />
+        <Button text="Cancel" onAction="#cancel" />
+    </HBox>
+
+</VBox>

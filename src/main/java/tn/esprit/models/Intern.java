@@ -3,7 +3,7 @@ package tn.esprit.models;
 import javafx.beans.property.*;
 
 public class Intern {
-    private int id;
+    private final IntegerProperty id= new SimpleIntegerProperty();
     private final IntegerProperty user_id = new SimpleIntegerProperty();
     private String cin_passport;
     private String studylevel;
@@ -20,7 +20,7 @@ public Intern(){
 }
     public Intern(int id, int userId, String cinPassport, String studylevel, String speciality,
                   String sector, String procontact, String latitude, String longitude, String profileimage) {
-        this.id = id;
+        this.id.set(id);
         this.user_id.set(userId);
         this.cin_passport = cinPassport;
         this.studylevel = studylevel;
@@ -125,6 +125,10 @@ public Intern(){
         return user_id;
     }
 
+    public IntegerProperty IdProperty() {
+        return id;
+    }
+
     public StringProperty cinPassportProperty() {
         return new SimpleStringProperty(cin_passport);
     }
@@ -158,11 +162,11 @@ public Intern(){
     }
 
     public int getId() {
-        return id;
+        return id.get();
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.id.set(id);
     }
 
     public int getUserId() {

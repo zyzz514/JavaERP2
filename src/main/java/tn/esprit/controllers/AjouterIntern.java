@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 
 
+
 import java.io.IOException;
 
 
@@ -57,7 +58,7 @@ public class AjouterIntern {
 
     @FXML
     void afficherIntern() throws IOException {
-        // Load SecondPage.fxml
+        // Load AfficherIntern.fxml
         Parent root = FXMLLoader.load(getClass().getResource("/AfficherIntern.fxml"));
         Stage stage = (Stage) afficher.getScene().getWindow();
         stage.setScene(new Scene(root));
