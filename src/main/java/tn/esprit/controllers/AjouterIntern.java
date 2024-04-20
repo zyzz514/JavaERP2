@@ -59,6 +59,7 @@ public class AjouterIntern {
     @FXML
     void afficherIntern() throws IOException {
         // Load AfficherIntern.fxml
+
         Parent root = FXMLLoader.load(getClass().getResource("/AfficherIntern.fxml"));
         Stage stage = (Stage) afficher.getScene().getWindow();
         stage.setScene(new Scene(root));

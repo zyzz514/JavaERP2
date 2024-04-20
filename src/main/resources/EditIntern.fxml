@@ -11,10 +11,10 @@
       fx:controller="tn.esprit.controllers.EditIntern"
       prefWidth="300" prefHeight="400" alignment="CENTER" spacing="10">
 
-    <!-- User ID -->
+    <!-- Id -->
     <HBox spacing="10">
-        <Label text="User ID:" />
-        <TextField fx:id="userIdField" />
+        <Label text="Id:" />
+        <TextField fx:id="IdField" />
     </HBox>
 
     <!-- Passport -->
@@ -23,12 +23,49 @@
         <TextField fx:id="passportField" />
     </HBox>
 
-    <!-- Other attributes (study, speciality, sector, pro, latitude, longitude, image, etc.) -->
-    <!-- Add similar HBox elements for other attributes -->
-
-    <!-- Save and Cancel buttons -->
+    <!-- Study -->
     <HBox spacing="10">
-        <Button text="Save" onAction="#saveChanges" />
+        <Label text="Study" />
+        <TextField fx:id="studyField" />
+    </HBox>
+
+    <!-- Speciality -->
+    <HBox spacing="10">
+        <Label text="Speciality" />
+        <TextField fx:id="specialityField" />
+    </HBox>
+
+    <!-- Sector -->
+    <HBox spacing="10">
+        <Label text="Sector" />
+        <TextField fx:id="sectorField" />
+    </HBox>
+
+    <!-- Pro -->
+    <HBox spacing="10">
+        <Label text="Pro" />
+        <TextField fx:id="proField" />
+    </HBox>
+
+    <!-- Latitude -->
+    <HBox spacing="10">
+        <Label text="Latitude" />
+        <TextField fx:id="latitudeField" />
+    </HBox>
+
+    <!-- Longitude -->
+    <HBox spacing="10">
+        <Label text="Longitude" />
+        <TextField fx:id="longitudeField" />
+    </HBox>
+
+    <!-- Image -->
+    <HBox spacing="10">
+        <Label text="Image" />
+        <TextField fx:id="imageField" />
+    </HBox>
+    <HBox spacing="10">
+        <Button  text="Save" onAction="#saveChanges" />
         <Button text="Cancel" onAction="#cancel" />
     </HBox>
 

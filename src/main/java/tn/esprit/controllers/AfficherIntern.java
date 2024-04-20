@@ -21,114 +21,62 @@ import java.util.ResourceBundle;
 
 public class AfficherIntern {
 
-    @FXML
-    private TableView<Intern> tab;
-
-    @FXML
-    private TableColumn<Intern, Integer> IdColumn;
-
-    @FXML
-    private TableColumn<Intern, String> passportColumn;
-
-    @FXML
-    private TableColumn<Intern, String> studyColumn;
-
-    @FXML
-    private TableColumn<Intern, String> specialityColumn;
-
-    @FXML
-    private TableColumn<Intern, String> sectorColumn;
-
-    @FXML
-    private TableColumn<Intern, String> proColumn;
-
-    @FXML
-    private TableColumn<Intern, String> latitudeColumn;
-
-    @FXML
-    private TableColumn<Intern, String> longitudeColumn;
-
-    @FXML
-    private TableColumn<Intern, String> imageColumn;
-
     private ServiceIntern serviceIntern = new ServiceIntern();
     @FXML
     private Button ajouter;
 
-    @FXML
-    private TableColumn<Intern, Void> deleteColumn;
 
     @FXML
     private GridPane gridPane;
 
 
-
-    private void deleteIntern(Intern intern) {
-
-
-        // Display confirmation dialog
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirmation");
-        alert.setHeaderText("Confirm Deletion");
-        alert.setContentText("Are you sure you want to delete this intern?");
-        Optional<ButtonType> result = alert.showAndWait();
-
-        // If user confirms deletion, proceed
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-            // Delete intern from the database
-            serviceIntern.delete(intern.getId());
-
-            // Remove intern from TableView
-            tab.getItems().remove(intern);
-        }
-
-    }
     //  @FXML
     public void initialize() {
-        // Initialize TableView columns
-        IdColumn.setCellValueFactory(cellData -> cellData.getValue().IdProperty().asObject());
-        passportColumn.setCellValueFactory(cellData -> cellData.getValue().cinPassportProperty());
-        studyColumn.setCellValueFactory(cellData -> cellData.getValue().studylevelProperty());
-        specialityColumn.setCellValueFactory(cellData -> cellData.getValue().specialityProperty());
-        sectorColumn.setCellValueFactory(cellData -> cellData.getValue().sectorProperty());
-        proColumn.setCellValueFactory(cellData -> cellData.getValue().procontactProperty());
-        latitudeColumn.setCellValueFactory(cellData -> cellData.getValue().latitudeProperty());
-        longitudeColumn.setCellValueFactory(cellData -> cellData.getValue().longitudeProperty());
-        imageColumn.setCellValueFactory(cellData -> cellData.getValue().profileimageProperty());
 
         List<Intern> internList = serviceIntern.getAll(); // Assuming getAll() retrieves all interns from the database
-        tab.getItems().addAll(internList);
 
-        deleteColumn.setCellFactory(param -> new TableCell<Intern, Void>() {
-            private final Button deleteButton = new Button("Delete");
 
-            {
+            // Iterate over the list and populate the GridPane
+            int rowIndex = 0;
+            for (Intern intern : internList) {
+                Label label1 = new Label(intern.getCinPassport());
+                Label label2 = new Label(intern.getStudylevel());
+                Label label3 = new Label(intern.getSpeciality());
+                Label label4 = new Label(intern.getSector());
+                Label label5 = new Label(intern.getProcontact());
+                Label label6 = new Label(intern.getProfileimage());
+
+                // Add labels to the GridPane
+                gridPane.add(label1, 0, rowIndex);
+                gridPane.add(label2, 1, rowIndex);
+                gridPane.add(label3, 2, rowIndex);
+                gridPane.add(label4, 3, rowIndex);
+                gridPane.add(label5, 4, rowIndex);
+                gridPane.add(label6, 5, rowIndex);
+
+                // Create and add a delete button for each row
+                Button deleteButton = new Button("Delete");
                 deleteButton.setOnAction(event -> {
-                    Intern intern = getTableView().getItems().get(getIndex());
-                    deleteIntern(intern);
+                    // Display confirmation dialog
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Confirmation");
+                    alert.setHeaderText("Delete Item");
+                    alert.setContentText("Are you sure you want to delete this item?");
+
+                    alert.showAndWait().ifPresent(response -> {
+                        if (response == ButtonType.OK) {
+                            // Handle delete action
+                            serviceIntern.delete(intern.getId()); // Assuming delete method takes the id as parameter
+                            gridPane.getChildren().removeAll(label1, label2, label3, label4, label5, label6, deleteButton);
+                        }
+                    });
                 });
+                gridPane.add(deleteButton, 6, rowIndex);
+
+                rowIndex++; // Move to the next row for the next intern's data
             }
-                @Override
-                protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    setGraphic(deleteButton);
-                }
-            }
-            });
-        tab.setRowFactory(tv -> {
-            TableRow<Intern> row = new TableRow<>();
-            row.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 2 && !row.isEmpty()) { // Double click
-                    Intern selectedIntern = row.getItem();
-                    // Handle double click action, e.g., open edit dialog
-                    openEditDialog(selectedIntern);
-                }
-            });
-            return row;
-        });
+
+       // t
     }
 
     private void openEditDialog(Intern intern) {
@@ -153,34 +101,8 @@ public class AfficherIntern {
         }
     }
 
-   /* @FXML
-    public void initialize() {
-        List<Intern> internList = serviceIntern.getAll(); // Assuming getAll() retrieves all interns from the database
-        populateGridPane(internList);
-    }
-    private void populateGridPane(List<Intern> internList) {
-        int row = 0;
-        for (Intern intern : internList) {
-            gridPane.addRow(row,
-                    new Label(Integer.toString(intern.getUserId())),
-                    new Label(intern.getCinPassport()),
-                    new Label(intern.getStudylevel()),
-                    new Label(intern.getSpeciality()),
-                    new Label(intern.getSector()),
-                    new Label(intern.getProcontact()),
-                    new Label(intern.getLatitude()),
-                    new Label(intern.getLongitude()),
-                    new Label(intern.getProfileimage()),
-                    new Button("Delete")
-            );
 
-            // Set delete button action
-            Button deleteButton = (Button) gridPane.getChildren().get(row * (gridPane.getColumnCount() - 1) + (gridPane.getColumnCount() - 1));
-            deleteButton.setOnAction(event -> deleteIntern(intern));
 
-            row++;
-        }
-    }*/
     @FXML
     void ajouterIntern() throws IOException {
         // Load SecondPage.fxml
@@ -194,7 +116,7 @@ public class AfficherIntern {
     public void main() {
     }
 
-    @FXML
+   /* @FXML
     void updateIntern() {
         // Get the selected intern from the table
         Intern selectedIntern = tab.getSelectionModel().getSelectedItem();
@@ -209,7 +131,7 @@ public class AfficherIntern {
             alert.setContentText("Please select an intern to update.");
             alert.showAndWait();
         }
-    }
+    }*/
 
     private void openEditInternDialog(Intern intern) {
         // Load the FXML file for the edit dialog
@@ -236,5 +158,7 @@ public class AfficherIntern {
         // Update TableView if changes were made
         // You can implement this part based on your specific requirement
     }
+
+
 }
 

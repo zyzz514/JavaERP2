@@ -1,0 +1,30 @@
+.serach-box{
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 100;
+
+}
+
+.transparent{
+    -fx-background-color: rgba(0,0,0,0);
+}
+
+.serach-button{
+    -fx-background-color: #828282;
+    -fx-background-radius: 30;
+}
+
+.right-bar{
+    -fx-background-color: #D3D3D3;
+}
+
+.shadow{
+    -fx-effect: dropShadow(three-pass-box, rgba(0,0,0,0.3), 15.0, 0.0, 0.0, 15.0);
+}
+
+.updateInput{
+    -fx-background-radius: 15;
+   -fx-min-height: 30;
+}
+.label-l1{
+    -fx-label-padding: 80;
+}
