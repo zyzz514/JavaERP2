@@ -15,6 +15,7 @@ import javafx.scene.layout.GridPane;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -30,8 +31,9 @@ public class AfficherIntern {
     private GridPane gridPane;
 
 
-    //  @FXML
-    public void initialize() {
+    @FXML
+    private TextField searchIN;
+   /* public void initialize() {
 
         List<Intern> internList = serviceIntern.getAll(); // Assuming getAll() retrieves all interns from the database
 
@@ -77,7 +79,7 @@ public class AfficherIntern {
             }
 
        // t
-    }
+    }*/
 
     private void openEditDialog(Intern intern) {
         try {
@@ -115,6 +117,77 @@ public class AfficherIntern {
 
     public void main() {
     }
+
+
+    public void initialize() {
+        displayInterns(serviceIntern.getAll());
+    }
+    private void displayInterns(List<Intern> interns) {
+        gridPane.getChildren().clear(); // Clear previous content
+        int rowIndex = 0;
+        for (Intern intern : interns) {
+            // Populate the GridPane with intern data
+            Label label1 = new Label(intern.getCinPassport());
+            Label label2 = new Label(intern.getStudylevel());
+            Label label3 = new Label(intern.getSpeciality());
+            Label label4 = new Label(intern.getSector());
+            Label label5 = new Label(intern.getProcontact());
+            Label label6 = new Label(intern.getProfileimage());
+
+            gridPane.add(label1, 0, rowIndex);
+            gridPane.add(label2, 1, rowIndex);
+            gridPane.add(label3, 2, rowIndex);
+            gridPane.add(label4, 3, rowIndex);
+            gridPane.add(label5, 4, rowIndex);
+            gridPane.add(label6, 5, rowIndex);
+
+            // Add delete button
+            Button deleteButton = new Button("Delete");
+            deleteButton.setOnAction(event -> deleteIntern(intern));
+            gridPane.add(deleteButton, 6, rowIndex);
+
+            rowIndex++;
+        }
+    }
+
+    private void deleteIntern(Intern intern) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText("Delete Item");
+        alert.setContentText("Are you sure you want to delete this item?");
+
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                serviceIntern.delete(intern.getId());
+                displayInterns(serviceIntern.getAll());
+            }
+        });
+    }
+
+    @FXML
+    void searchIntern() {
+        String searchText = searchIN.getText().trim();
+        if (searchText.isEmpty()) {
+            displayInterns(serviceIntern.getAll()); // Show all interns if search text is empty
+        } else {
+            List<Intern> searchResults = new ArrayList<>();
+            for (Intern intern : serviceIntern.getAll()) {
+                if (intern.getCinPassport().contains(searchText)) {
+                    searchResults.add(intern);
+                }
+            }
+            if (searchResults.isEmpty()) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Search Results");
+                alert.setHeaderText(null);
+                alert.setContentText("No interns found matching the search criteria.");
+                alert.showAndWait();
+            } else {
+                displayInterns(searchResults);
+            }
+        }
+    }
+
 
    /* @FXML
     void updateIntern() {

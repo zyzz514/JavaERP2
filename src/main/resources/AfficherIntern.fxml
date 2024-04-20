@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="605.0" prefWidth="980.0" stylesheets="css/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.AfficherIntern">
+<AnchorPane minWidth="1000.0" prefHeight="605.0" prefWidth="900.0" stylesheets="css/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.AfficherIntern">
    <children>
       <BorderPane prefHeight="605.0" prefWidth="299.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="665.0" AnchorPane.topAnchor="0.0">
          <left>
@@ -115,18 +115,18 @@
                   <String fx:value="shadow" />
                </styleClass>
             </TextField>
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="118.0" styleClass="serach-button" stylesheets="@css/style.css" text="Search" textFill="WHITE" />
+            <Button mnemonicParsing="false" onAction="#searchIntern" prefHeight="26.0" prefWidth="118.0" styleClass="serach-button" stylesheets="@css/style.css" text="Search" textFill="WHITE" />
          </children>
          <styleClass>
             <String fx:value="transparent" />
             <String fx:value="shadow" />
          </styleClass>
       </HBox>
-      <HBox layoutX="305.0" layoutY="132.0" prefHeight="68.0" prefWidth="636.0">
+      <HBox layoutX="305.0" layoutY="132.0" prefHeight="68.0" prefWidth="669.0">
          <children>
-            <SplitPane orientation="VERTICAL" prefHeight="228.0" prefWidth="636.0">
+            <SplitPane orientation="VERTICAL" prefHeight="68.0" prefWidth="673.0">
               <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="161.0" prefWidth="634.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="66.0" prefWidth="660.0">
                      <children>
                         <Label layoutX="14.0" layoutY="21.0" text="Passport" />
                         <Label layoutX="116.0" layoutY="21.0" text="Label" />
@@ -140,30 +140,31 @@
             </SplitPane>
          </children></HBox>
       <Button fx:id="ajouter" layoutX="576.0" layoutY="492.0" mnemonicParsing="false" onAction="#ajouterIntern" text="Back" />
-      <AnchorPane layoutX="310.0" layoutY="200.0" minHeight="0.0" minWidth="0.0" prefHeight="224.0" prefWidth="625.0">
+      <AnchorPane layoutX="300.0" layoutY="200.0" minHeight="0.0" minWidth="0.0" prefHeight="248.0" prefWidth="670.0">
          <children>
-            <VBox layoutX="-4.0" prefHeight="224.0" prefWidth="646.0">
+            <VBox layoutY="14.0" prefHeight="260.0" prefWidth="670.0">
                <children>
-                  <ScrollPane prefHeight="261.0" prefWidth="636.0">
+                  <ScrollPane maxHeight="260.0" minHeight="230.0" prefHeight="280.0" prefWidth="670.0">
                      <content>
                         <HBox prefHeight="224.0" prefWidth="702.0">
                            <children>
-                              <GridPane>
+                              <GridPane prefHeight="241.0" prefWidth="683.0">
                                  <columnConstraints>
                                     <ColumnConstraints />
                                  </columnConstraints>
                                  <rowConstraints>
                                     <RowConstraints />
+                                    <RowConstraints />
                                  </rowConstraints>
                                  <children>
-                                    <GridPane fx:id="gridPane" alignment="CENTER" hgap="20.0" minHeight="97.0" minWidth="625.0" prefHeight="98.0" prefWidth="694.0" vgap="20.0">
+                                    <GridPane fx:id="gridPane" alignment="CENTER" hgap="20.0" minHeight="97.0" minWidth="606.0" prefHeight="98.0" prefWidth="694.0" vgap="20.0">
                                        <columnConstraints>
                                           <ColumnConstraints prefWidth="100.0" />
                                           <ColumnConstraints prefWidth="100.0" />
                                           <ColumnConstraints prefWidth="100.0" />
                                           <ColumnConstraints prefWidth="100.0" />
                                           <ColumnConstraints prefWidth="100.0" />
-                                          <ColumnConstraints prefWidth="65.0" />
+                                          <ColumnConstraints prefWidth="60.0" />
                                        </columnConstraints>
                                        <rowConstraints>
                                           <RowConstraints />
