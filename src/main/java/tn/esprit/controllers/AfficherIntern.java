@@ -28,7 +28,10 @@ public class AfficherIntern {
 
 
     @FXML
-    private GridPane gridPane;
+    private GridPane gridPane,GRID;
+
+    @FXML
+    private TextField PassUPD,SpecialityUPD,SectorUPD,ProUPD,imgUPD,StudyUPD;
 
 
     @FXML
@@ -146,9 +149,50 @@ public class AfficherIntern {
             deleteButton.setOnAction(event -> deleteIntern(intern));
             gridPane.add(deleteButton, 6, rowIndex);
 
+
+            addDoubleClickHandler(label1, intern);
+            addDoubleClickHandler(label2, intern);
+            addDoubleClickHandler(label3, intern);
+            addDoubleClickHandler(label4, intern);
+            addDoubleClickHandler(label5, intern);
+            addDoubleClickHandler(label6, intern);
+
             rowIndex++;
+
+
+        }
+
+    }
+
+    private void addDoubleClickHandler(Label label, Intern intern) {
+        label.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) { // Double-click detected
+                // Display intern data in text fields
+                PassUPD.setText(intern.getCinPassport());
+                StudyUPD.setText(intern.getStudylevel());
+                SpecialityUPD.setText(intern.getSpeciality());
+                SectorUPD.setText(intern.getSector());
+                ProUPD.setText(intern.getProcontact());
+                imgUPD.setText(intern.getProfileimage());
+            }
+        });
+    }
+    private void handleDoubleClick(Label label, Intern intern) {
+        if (label.getOnMouseClicked() != null) {
+            label.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2) { // Double-click detected
+                    // Display intern data in text fields
+                    PassUPD.setText(intern.getCinPassport());
+                    StudyUPD.setText(intern.getStudylevel());
+                    SpecialityUPD.setText(intern.getSpeciality());
+                    SectorUPD.setText(intern.getSector());
+                    ProUPD.setText(intern.getProcontact());
+                    imgUPD.setText(intern.getProfileimage());
+                }
+            });
         }
     }
+
 
     private void deleteIntern(Intern intern) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -192,7 +236,7 @@ public class AfficherIntern {
    /* @FXML
     void updateIntern() {
         // Get the selected intern from the table
-        Intern selectedIntern = tab.getSelectionModel().getSelectedItem();
+        Intern selectedIntern = GRID.getColumnConstraints();
         if (selectedIntern != null) {
             // Open the edit dialog
             openEditInternDialog(selectedIntern);
