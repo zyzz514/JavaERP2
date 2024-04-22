@@ -12,7 +12,6 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -144,56 +143,23 @@
               </items>
             </SplitPane>
          </children></HBox>
-      <Button fx:id="ajouter" layoutX="576.0" layoutY="492.0" mnemonicParsing="false" onAction="#ajouterIntern" text="Back" />
-      <AnchorPane layoutX="300.0" layoutY="200.0" minHeight="0.0" minWidth="0.0" prefHeight="248.0" prefWidth="670.0">
+      <Button fx:id="ajouter" layoutX="613.0" layoutY="538.0" mnemonicParsing="false" onAction="#ajouterIntern" text="Back" />
+      <AnchorPane prefHeight="500.0" layoutX="304.0" layoutY="207.0" prefWidth="670.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
          <children>
-            <VBox layoutY="14.0" prefHeight="260.0" prefWidth="670.0">
-               <children>
-                  <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="280.0" minHeight="230.0" prefHeight="280.0" prefWidth="670.0">
-                     <content>
-                        <HBox prefHeight="224.0" prefWidth="702.0">
-                           <children>
-                              <GridPane fx:id="GRID" prefHeight="241.0" prefWidth="683.0">
-                                 <columnConstraints>
-                                    <ColumnConstraints />
-                                 </columnConstraints>
-                                 <rowConstraints>
-                                    <RowConstraints />
-                                    <RowConstraints />
-                                 </rowConstraints>
-                                 <children>
-                                    <GridPane fx:id="gridPane" alignment="CENTER" hgap="20.0" minHeight="97.0" minWidth="606.0" prefHeight="98.0" prefWidth="694.0" vgap="20.0">
-                                       <columnConstraints>
-                                          <ColumnConstraints prefWidth="100.0" />
-                                          <ColumnConstraints prefWidth="100.0" />
-                                          <ColumnConstraints prefWidth="100.0" />
-                                          <ColumnConstraints prefWidth="100.0" />
-                                          <ColumnConstraints prefWidth="100.0" />
-                                          <ColumnConstraints prefWidth="60.0" />
-                                       </columnConstraints>
-                                       <rowConstraints>
-                                          <RowConstraints />
-                                       </rowConstraints>
-                                       <children>
-                                          <Label GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                                          <Label GridPane.columnIndex="1" GridPane.rowIndex="0" />
-                                          <Label GridPane.columnIndex="2" GridPane.rowIndex="0" />
-                                          <Label GridPane.columnIndex="3" GridPane.rowIndex="0" />
-                                          <Label GridPane.columnIndex="4" GridPane.rowIndex="0" />
-                                          <Label GridPane.columnIndex="5" GridPane.rowIndex="0" />
-                                       </children>
-                                    </GridPane>
-                                 </children>
-                                 <padding>
-                                    <Insets bottom="10.0" right="10.0" />
-                                 </padding>
-                              </GridPane>
-                           </children>
-                        </HBox>
-                     </content>
-                  </ScrollPane>
-               </children>
-            </VBox>
+            <ScrollPane fitToWidth="false" fitToHeight="false"  prefHeight="300.0" prefWidth="670.0">
+               <content>
+                  <GridPane fx:id="gridPane" alignment="CENTER" hgap="20.0"  vgap="20.0">
+                     <columnConstraints>
+                        <ColumnConstraints prefWidth="100.0" />
+                        <ColumnConstraints prefWidth="100.0" />
+                        <ColumnConstraints prefWidth="100.0" />
+                        <ColumnConstraints prefWidth="100.0" />
+                        <ColumnConstraints prefWidth="100.0" />
+                        <ColumnConstraints prefWidth="40.0" />
+                     </columnConstraints>
+                  </GridPane>
+               </content>
+            </ScrollPane>
          </children>
       </AnchorPane>
    </children>
