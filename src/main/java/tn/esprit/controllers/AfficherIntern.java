@@ -26,7 +26,6 @@ public class AfficherIntern {
     @FXML
     private Button ajouter,updateButton;
 
-
     @FXML
     private GridPane gridPane,GRID;
 
@@ -36,6 +35,9 @@ public class AfficherIntern {
 
     @FXML
     private TextField searchIN;
+
+    private int chercherID,chercherUID;
+    private String chercherLong,chercherLit;
 
 
     private void openEditDialog(Intern intern) {
@@ -128,14 +130,18 @@ public class AfficherIntern {
                 SectorUPD.setText(intern.getSector());
                 ProUPD.setText(intern.getProcontact());
                 imgUPD.setText(intern.getProfileimage());
+                this.chercherID=intern.getId();
+                this.chercherUID= intern.getUser_id();
+                this.chercherLong=intern.getLongitude();
+                this.chercherLit=intern.getLatitude();
             }
         });
         // Add action to update button
-        updateButton.setOnAction(event -> updateIntern());
+        updateButton.setOnAction(event -> updateIntern(this.chercherID,this.chercherUID,this.chercherLong,this.chercherLit));
     }
 
     @FXML
-    private void updateIntern() {
+    private void updateIntern(int x,int y,String z,String w) {
         // Retrieve data from text fields
         String cinPassport = PassUPD.getText();
         String studyLevel = StudyUPD.getText();
@@ -152,6 +158,10 @@ public class AfficherIntern {
         updatedIntern.setSector(sector);
         updatedIntern.setProcontact(proContact);
         updatedIntern.setProfileimage(profileImage);
+        updatedIntern.setLongitude(z);
+        updatedIntern.setLatitude(w);
+        updatedIntern.setUser_id(y);
+        updatedIntern.setId(x);
 
 
         serviceIntern.update(updatedIntern);
