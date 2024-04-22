@@ -8,6 +8,29 @@
     -fx-background-color: rgba(0,0,0,0);
 }
 
+#ajouter{
+    -fx-background-color: #5e0493;
+    -fx-background-radius: 50;
+}
+
+#updateButton{
+    -fx-background-color: darkorange;
+    -fx-text-fill: white;
+    -fx-background-radius: 50;
+}
+
+#afficher{
+    -fx-background-color: rgba(14, 33, 143, 0.85);
+    -fx-text-fill: white;
+    -fx-background-radius: 50;
+}
+
+#ajt{
+    -fx-background-color: rgb(50, 203, 22);
+    -fx-text-fill: white;
+    -fx-background-radius: 50;
+}
+
 .serach-button{
     -fx-background-color: #828282;
     -fx-background-radius: 30;

@@ -143,12 +143,11 @@
               </items>
             </SplitPane>
          </children></HBox>
-      <Button fx:id="ajouter" layoutX="613.0" layoutY="538.0" mnemonicParsing="false" onAction="#ajouterIntern" text="Back" />
-      <AnchorPane prefHeight="500.0" layoutX="304.0" layoutY="207.0" prefWidth="670.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+      <AnchorPane layoutX="293.0" layoutY="223.0" prefHeight="500.0" prefWidth="670.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
          <children>
-            <ScrollPane fitToWidth="false" fitToHeight="false"  prefHeight="300.0" prefWidth="670.0">
+            <ScrollPane fitToHeight="false" fitToWidth="false" prefHeight="300.0" prefWidth="670.0">
                <content>
-                  <GridPane fx:id="gridPane" alignment="CENTER" hgap="20.0"  vgap="20.0">
+                  <GridPane fx:id="gridPane" alignment="CENTER" hgap="20.0" vgap="20.0">
                      <columnConstraints>
                         <ColumnConstraints prefWidth="100.0" />
                         <ColumnConstraints prefWidth="100.0" />
@@ -160,6 +159,7 @@
                   </GridPane>
                </content>
             </ScrollPane>
+            <Button fx:id="ajouter" layoutX="317.0" layoutY="368.0" mnemonicParsing="false" onAction="#ajouterIntern" stylesheets="@css/style.css" text="Back" />
          </children>
       </AnchorPane>
    </children>

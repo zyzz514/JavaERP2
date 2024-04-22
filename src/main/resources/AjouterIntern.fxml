@@ -31,8 +31,8 @@
         <Label layoutX="74.0" layoutY="498.0" text="ProfileImage" />
 
 
-        <Button fx:id="afficher" layoutX="407.0" layoutY="86.0" onAction="#afficherIntern">afficher</Button>
-        <Button layoutX="484.0" layoutY="86.0" onAction="#ajouterIntern">ajouter</Button>
+        <Button fx:id="afficher" layoutX="407.0" layoutY="86.0" onAction="#afficherIntern" stylesheets="@css/style.css">afficher</Button>
+        <Button fx:id="ajt" layoutX="484.0" layoutY="86.0" onAction="#ajouterIntern" stylesheets="@css/style.css">ajouter</Button>
     </children>
 
 
