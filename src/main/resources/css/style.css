@@ -51,3 +51,16 @@
 .label-l1{
     -fx-label-padding: 80;
 }
+.card {
+    -fx-background-color: white;
+    -fx-border-color: #ccc;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-padding: 10px;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.2) , 10,0,0,1 );
+}
+
+.card:hover {
+    -fx-background-color: #f9f9f9;
+    -fx-cursor: hand;
+}

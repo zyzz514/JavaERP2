@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.control.TextField?>
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="204.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox prefHeight="200.0" prefWidth="100.0">
+         <children>
+            <Label text="Passport">
+               <padding>
+                  <Insets left="10.0" top="15.0" />
+               </padding>
+            </Label>
+            <Label text="Study Level">
+               <padding>
+                  <Insets left="10.0" top="15.0" />
+               </padding>
+            </Label>
+            <Label text="Speciality">
+               <padding>
+                  <Insets left="10.0" top="15.0" />
+               </padding>
+            </Label>
+            <Label text="Sector">
+               <padding>
+                  <Insets left="10.0" top="15.0" />
+               </padding>
+            </Label>
+            <Label text="Contact">
+               <padding>
+                  <Insets left="10.0" top="15.0" />
+               </padding>
+            </Label>
+            <Label text="Image">
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets left="10.0" top="15.0" />
+               </padding>
+            </Label>
+         </children>
+      </VBox>
+      <SplitPane dividerPositions="0.29797979797979796" prefHeight="204.0" prefWidth="93.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="202.0" prefWidth="8.0" />
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="202.0" prefWidth="22.0" />
+        </items>
+      </SplitPane>
+      <ScrollPane fitToHeight="false" fitToWidth="false" prefHeight="204.0" prefWidth="245.0">
+         <content>
+            <Pane fx:id="Pane" >
+               <TextField  fx:id="displayPass"/>
+               <TextField  fx:id="displayStd"/>
+               <TextField  fx:id="displaySpec"/>
+               <TextField  fx:id="displaySec"/>
+               <TextField  fx:id="displayCont"/>
+               <TextField  fx:id="displayImag"/>
+            </Pane>
+         </content>
+      </ScrollPane>
+
+   </children>
+</HBox>

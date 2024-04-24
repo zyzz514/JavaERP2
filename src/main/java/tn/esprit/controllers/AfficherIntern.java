@@ -3,24 +3,24 @@ package tn.esprit.controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import tn.esprit.models.Intern;
 import tn.esprit.services.ServiceIntern;
 import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
-import java.net.URL;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.ResourceBundle;
+
 
 public class AfficherIntern {
+
 
     private ServiceIntern serviceIntern = new ServiceIntern();
     @FXML
@@ -32,15 +32,66 @@ public class AfficherIntern {
     @FXML
     private TextField PassUPD,SpecialityUPD,SectorUPD,ProUPD,imgUPD,StudyUPD;
 
-
     @FXML
     private TextField searchIN;
 
     private int chercherID,chercherUID;
     private String chercherLong,chercherLit;
 
+    @FXML
+    private HBox cardContainer;
 
-    private void openEditDialog(Intern intern) {
+    private void displayInterns2(List<Intern> interns) {
+        cardContainer.getChildren().clear(); // Clear previous content
+        for (Intern intern : interns) {
+            // Create and configure your card here
+            Pane card = createCard(intern);
+            // Add the card to the container
+            cardContainer.getChildren().add(card);
+        }
+    }
+
+    private Pane createCard(Intern intern) {
+        // Create a Pane or any suitable container for your card
+        Pane card = new Pane();
+        card.getStyleClass().add("card"); // Add CSS class for styling
+        card.setPrefSize(200, 150); // Set the preferred size of the card
+
+        // Create and configure the content of the card
+        Label passportLabel = new Label("Passport: " + intern.getCinPassport());
+        passportLabel.setLayoutX(10);
+        passportLabel.setLayoutY(10);
+
+        Label studyLevelLabel = new Label("Study Level: " + intern.getStudylevel());
+        studyLevelLabel.setLayoutX(10);
+        studyLevelLabel.setLayoutY(30);
+
+        Button deleteButton = new Button("Delete");
+        deleteButton.setLayoutX(10);
+        deleteButton.setLayoutY(70);
+        deleteButton.setOnAction(event -> deleteIntern(intern));
+
+        // Double-click event
+        card.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                // Display intern data in text fields
+                PassUPD.setText(intern.getCinPassport());
+                StudyUPD.setText(intern.getStudylevel());
+                // Add more fields as needed
+            }
+        });
+        // Add content to the card
+        card.getChildren().addAll(passportLabel, studyLevelLabel,deleteButton /* Add more labels or other nodes as needed */);
+
+        // Add event handlers or other configurations as needed
+
+
+        return card;
+    }
+
+
+
+   /* private void openEditDialog(Intern intern) {
         try {
             // Load the FXML file for the edit dialog
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/EditIntern.fxml"));
@@ -60,7 +111,8 @@ public class AfficherIntern {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
+
 
 
 
@@ -79,9 +131,9 @@ public class AfficherIntern {
 
 
     public void initialize() {
-        displayInterns(serviceIntern.getAll());
+        displayInterns2(serviceIntern.getAll());
     }
-    private void displayInterns(List<Intern> interns) {
+    /*private void displayInterns(List<Intern> interns) {
         gridPane.getChildren().clear(); // Clear previous content
         int rowIndex = 0;
         for (Intern intern : interns) {
@@ -138,7 +190,7 @@ public class AfficherIntern {
         });
         // Add action to update button
         updateButton.setOnAction(event -> updateIntern(this.chercherID,this.chercherUID,this.chercherLong,this.chercherLit));
-    }
+    }*/
 
     @FXML
     private void updateIntern(int x,int y,String z,String w) {
@@ -188,7 +240,7 @@ public class AfficherIntern {
         alert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.OK) {
                 serviceIntern.delete(intern.getId());
-                displayInterns(serviceIntern.getAll());
+                displayInterns2(serviceIntern.getAll());
             }
         });
     }
@@ -197,7 +249,7 @@ public class AfficherIntern {
     void searchIntern() {
         String searchText = searchIN.getText().trim();
         if (searchText.isEmpty()) {
-            displayInterns(serviceIntern.getAll()); // Show all interns if search text is empty
+            displayInterns2(serviceIntern.getAll()); // Show all interns if search text is empty
         } else {
             List<Intern> searchResults = new ArrayList<>();
             for (Intern intern : serviceIntern.getAll()) {
@@ -212,7 +264,7 @@ public class AfficherIntern {
                 alert.setContentText("No interns found matching the search criteria.");
                 alert.showAndWait();
             } else {
-                displayInterns(searchResults);
+                displayInterns2(searchResults);
             }
         }
     }
