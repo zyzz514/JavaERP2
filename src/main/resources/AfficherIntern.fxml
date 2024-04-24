@@ -148,13 +148,25 @@
                <HBox fx:id="cardContainer" alignment="CENTER" spacing="10.0">
                   <!-- You'll dynamically add card elements here -->
                </HBox>
+
+
             </VBox>
 
          </ScrollPane>
 
+         <HBox>
+            <VBox>
+               <HBox fx:id="cardContainerPIE">
+
+               </HBox>
+            </VBox>
+         </HBox>
 
             <Button fx:id="ajouter" layoutX="317.0" layoutY="368.0" mnemonicParsing="false" onAction="#ajouterIntern" stylesheets="@css/style.css" text="Back" />
          </children>
       </AnchorPane>
    </children>
+
+
+
 </AnchorPane>

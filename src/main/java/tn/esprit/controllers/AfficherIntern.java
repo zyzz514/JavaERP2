@@ -1,10 +1,13 @@
 package tn.esprit.controllers;
 
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -39,23 +42,46 @@ public class AfficherIntern {
     private String chercherLong,chercherLit;
 
     @FXML
-    private HBox cardContainer;
+    private HBox cardContainer,cardContainerPIE;
 
     private void displayInterns2(List<Intern> interns) {
+        int count = 0;
+         float rt = 0.0f; // Initialize to float
+        final float rt2;
         cardContainer.getChildren().clear(); // Clear previous content
         for (Intern intern : interns) {
+            if ("informatique".equals(intern.getSpeciality())) { // Use equals() for string comparison
+                count++;
+            }
             // Create and configure your card here
             Pane card = createCard(intern);
             // Add the card to the container
             cardContainer.getChildren().add(card);
         }
+        if (!interns.isEmpty()) { // Check if the interns list is not empty to avoid division by zero
+            rt = (float) count / interns.size() * 100; // Calculate percentage
+        }
+        System.out.println("Percentage of interns with speciality 'informatique': " + rt + "%");
+
+        // Create PieChart data
+        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
+                new PieChart.Data("Informatique", count),
+                new PieChart.Data("Other Specialities", interns.size() - count)
+        );
+        rt2=rt;
+        PieChart pieChart = new PieChart(pieChartData);
+        pieChart.setTitle("Specialities Distribution");
+
+
+
+        cardContainer.getChildren().add(pieChart);
     }
 
     private Pane createCard(Intern intern) {
         // Create a Pane or any suitable container for your card
         Pane card = new Pane();
         card.getStyleClass().add("card"); // Add CSS class for styling
-        card.setPrefSize(200, 150); // Set the preferred size of the card
+        card.setPrefSize(220, 200); // Set the preferred size of the card
 
         // Create and configure the content of the card
         Label passportLabel = new Label("Passport: " + intern.getCinPassport());
@@ -66,9 +92,25 @@ public class AfficherIntern {
         studyLevelLabel.setLayoutX(10);
         studyLevelLabel.setLayoutY(30);
 
+        Label specialityLabel = new Label("Speciality: " + intern.getSpeciality());
+        specialityLabel.setLayoutX(10);
+        specialityLabel.setLayoutY(50);
+
+        Label SectorLabel = new Label("Sector: " + intern.getSector());
+        SectorLabel.setLayoutX(10);
+        SectorLabel.setLayoutY(70);
+
+        Label ContactLabel = new Label("Contact: " + intern.getProcontact());
+        ContactLabel.setLayoutX(10);
+        ContactLabel.setLayoutY(90);
+
+        Label ImgLabel = new Label("Image: " + intern.getProfileimage());
+        ImgLabel.setLayoutX(10);
+        ImgLabel.setLayoutY(110);
+
         Button deleteButton = new Button("Delete");
-        deleteButton.setLayoutX(10);
-        deleteButton.setLayoutY(70);
+        deleteButton.setLayoutX(80);
+        deleteButton.setLayoutY(150);
         deleteButton.setOnAction(event -> deleteIntern(intern));
 
         // Double-click event
@@ -77,14 +119,22 @@ public class AfficherIntern {
                 // Display intern data in text fields
                 PassUPD.setText(intern.getCinPassport());
                 StudyUPD.setText(intern.getStudylevel());
-                // Add more fields as needed
+                SpecialityUPD.setText(intern.getSpeciality());
+                SectorUPD.setText(intern.getSector());
+                ProUPD.setText(intern.getProcontact());
+                imgUPD.setText(intern.getProfileimage());
+                this.chercherID=intern.getId();
+                this.chercherUID= intern.getUser_id();
+                this.chercherLong=intern.getLongitude();
+                this.chercherLit=intern.getLatitude();
+
             }
         });
         // Add content to the card
-        card.getChildren().addAll(passportLabel, studyLevelLabel,deleteButton /* Add more labels or other nodes as needed */);
+        card.getChildren().addAll(passportLabel, studyLevelLabel,specialityLabel,SectorLabel,ContactLabel,ImgLabel,deleteButton /* Add more labels or other nodes as needed */);
 
         // Add event handlers or other configurations as needed
-
+        updateButton.setOnAction(event -> updateIntern(this.chercherID,this.chercherUID,this.chercherLong,this.chercherLit));
 
         return card;
     }
@@ -133,64 +183,7 @@ public class AfficherIntern {
     public void initialize() {
         displayInterns2(serviceIntern.getAll());
     }
-    /*private void displayInterns(List<Intern> interns) {
-        gridPane.getChildren().clear(); // Clear previous content
-        int rowIndex = 0;
-        for (Intern intern : interns) {
-            // Populate the GridPane with intern data
-            Label label1 = new Label(intern.getCinPassport());
-            Label label2 = new Label(intern.getStudylevel());
-            Label label3 = new Label(intern.getSpeciality());
-            Label label4 = new Label(intern.getSector());
-            Label label5 = new Label(intern.getProcontact());
-            Label label6 = new Label(intern.getProfileimage());
 
-            gridPane.add(label1, 0, rowIndex);
-            gridPane.add(label2, 1, rowIndex);
-            gridPane.add(label3, 2, rowIndex);
-            gridPane.add(label4, 3, rowIndex);
-            gridPane.add(label5, 4, rowIndex);
-            gridPane.add(label6, 5, rowIndex);
-
-            // Add delete button
-            Button deleteButton = new Button("Delete");
-            deleteButton.setOnAction(event -> deleteIntern(intern));
-            gridPane.add(deleteButton, 6, rowIndex);
-
-
-            addDoubleClickHandler(label1, intern);
-            addDoubleClickHandler(label2, intern);
-            addDoubleClickHandler(label3, intern);
-            addDoubleClickHandler(label4, intern);
-            addDoubleClickHandler(label5, intern);
-            addDoubleClickHandler(label6, intern);
-
-            rowIndex++;
-
-
-        }
-
-    }
-
-    private void addDoubleClickHandler(Label label, Intern intern) {
-        label.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2) { // Double-click detected
-                // Display intern data in text fields
-                PassUPD.setText(intern.getCinPassport());
-                StudyUPD.setText(intern.getStudylevel());
-                SpecialityUPD.setText(intern.getSpeciality());
-                SectorUPD.setText(intern.getSector());
-                ProUPD.setText(intern.getProcontact());
-                imgUPD.setText(intern.getProfileimage());
-                this.chercherID=intern.getId();
-                this.chercherUID= intern.getUser_id();
-                this.chercherLong=intern.getLongitude();
-                this.chercherLit=intern.getLatitude();
-            }
-        });
-        // Add action to update button
-        updateButton.setOnAction(event -> updateIntern(this.chercherID,this.chercherUID,this.chercherLong,this.chercherLit));
-    }*/
 
     @FXML
     private void updateIntern(int x,int y,String z,String w) {
@@ -271,4 +264,62 @@ public class AfficherIntern {
 
 
 }
+ /*private void displayInterns(List<Intern> interns) {
+        gridPane.getChildren().clear(); // Clear previous content
+        int rowIndex = 0;
+        for (Intern intern : interns) {
+            // Populate the GridPane with intern data
+            Label label1 = new Label(intern.getCinPassport());
+            Label label2 = new Label(intern.getStudylevel());
+            Label label3 = new Label(intern.getSpeciality());
+            Label label4 = new Label(intern.getSector());
+            Label label5 = new Label(intern.getProcontact());
+            Label label6 = new Label(intern.getProfileimage());
+
+            gridPane.add(label1, 0, rowIndex);
+            gridPane.add(label2, 1, rowIndex);
+            gridPane.add(label3, 2, rowIndex);
+            gridPane.add(label4, 3, rowIndex);
+            gridPane.add(label5, 4, rowIndex);
+            gridPane.add(label6, 5, rowIndex);
+
+            // Add delete button
+            Button deleteButton = new Button("Delete");
+            deleteButton.setOnAction(event -> deleteIntern(intern));
+            gridPane.add(deleteButton, 6, rowIndex);
+
+
+            addDoubleClickHandler(label1, intern);
+            addDoubleClickHandler(label2, intern);
+            addDoubleClickHandler(label3, intern);
+            addDoubleClickHandler(label4, intern);
+            addDoubleClickHandler(label5, intern);
+            addDoubleClickHandler(label6, intern);
+
+            rowIndex++;
+
+
+        }
+
+    }
+
+    private void addDoubleClickHandler(Label label, Intern intern) {
+        label.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) { // Double-click detected
+                // Display intern data in text fields
+                PassUPD.setText(intern.getCinPassport());
+                StudyUPD.setText(intern.getStudylevel());
+                SpecialityUPD.setText(intern.getSpeciality());
+                SectorUPD.setText(intern.getSector());
+                ProUPD.setText(intern.getProcontact());
+                imgUPD.setText(intern.getProfileimage());
+                this.chercherID=intern.getId();
+                this.chercherUID= intern.getUser_id();
+                this.chercherLong=intern.getLongitude();
+                this.chercherLit=intern.getLatitude();
+            }
+        });
+        // Add action to update button
+        updateButton.setOnAction(event -> updateIntern(this.chercherID,this.chercherUID,this.chercherLong,this.chercherLit));
+    }*/
 
