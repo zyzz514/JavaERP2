@@ -12,7 +12,12 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.print.PrinterJob;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
+import javafx.scene.Node;
 import tn.esprit.models.Intern;
 import tn.esprit.services.ServiceIntern;
 import javafx.scene.layout.GridPane;
@@ -43,6 +48,11 @@ public class AfficherIntern {
 
     @FXML
     private HBox cardContainer,cardContainerPIE;
+
+    @FXML
+    private CheckBox studyLevelCheckBox;
+
+    private List<Intern> internList;
 
     private void displayInterns2(List<Intern> interns) {
         int count = 0;
@@ -238,6 +248,9 @@ public class AfficherIntern {
         });
     }
 
+
+
+
     @FXML
     void searchIntern() {
         String searchText = searchIN.getText().trim();
@@ -257,13 +270,80 @@ public class AfficherIntern {
                 alert.setContentText("No interns found matching the search criteria.");
                 alert.showAndWait();
             } else {
-                displayInterns2(searchResults);
+                // Apply checkbox filter if enabled
+                if (studyLevelCheckBox.isSelected()) {
+                    String selectedStudyLevel = ""; // Get the selected study level
+                    List<Intern> filteredResults = filterInterns(searchResults, selectedStudyLevel);
+                    displayInterns2(filteredResults);
+                } else {
+                    displayInterns2(searchResults);
+                }
             }
         }
     }
+    private List<Intern> filterInterns(List<Intern> interns, String selectedStudyLevel) {
+        List<Intern> filteredList = new ArrayList<>();
+
+        for (Intern intern : interns) {
+            // Apply study level filter
+            boolean matchesStudyLevel = intern.getStudylevel().equalsIgnoreCase(selectedStudyLevel);
+
+            // Add intern to filtered list if it matches the study level
+            if (matchesStudyLevel) {
+                filteredList.add(intern);
+            }
+        }
+
+        return filteredList;
+    }
 
 
+    public static void print(Node nodeToPrint) {
+        PrinterJob printerJob = PrinterJob.createPrinterJob();
+        if (printerJob != null && printerJob.showPrintDialog(nodeToPrint.getScene().getWindow())) {
+            boolean success = printerJob.printPage(nodeToPrint);
+            if (success) {
+                printerJob.endJob();
+            } else {
+                showPrintErrorAlert();
+            }
+        } else {
+            showPrintErrorAlert();
+        }
+    }
+
+    private static void showPrintErrorAlert() {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Print Error");
+        alert.setHeaderText(null);
+        alert.setContentText("Failed to print the document.");
+        alert.showAndWait();
+    }
+
+    public static void scaleForPrinting(Node node) {
+        double scaleX = 0.8;
+        double scaleY = 0.8;
+        Scale scale = new Scale(scaleX, scaleY);
+        node.getTransforms().add(scale);
+    }
+
+    @FXML
+    void handlePrintButtonAction() {
+        AfficherIntern.print(cardContainer);
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
  /*private void displayInterns(List<Intern> interns) {
         gridPane.getChildren().clear(); // Clear previous content
         int rowIndex = 0;
