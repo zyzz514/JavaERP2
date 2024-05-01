@@ -1,5 +1,8 @@
 package tn.esprit.controllers;
 
+import java.io.IOException;
+import javafx.scene.Node;
+import javafx.stage.Stage;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -9,22 +12,19 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+
+import javafx.scene.layout.*;
 import javafx.print.PrinterJob;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.transform.Scale;
-import javafx.stage.Stage;
-import javafx.scene.Node;
 import tn.esprit.models.Intern;
 import tn.esprit.services.ServiceIntern;
-import javafx.scene.layout.GridPane;
 
-import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import org.controlsfx.control.Notifications;
 
 
 public class AfficherIntern {
@@ -32,31 +32,35 @@ public class AfficherIntern {
 
     private ServiceIntern serviceIntern = new ServiceIntern();
     @FXML
-    private Button ajouter,updateButton;
+    private Button ajouter, updateButton;
 
     @FXML
-    private GridPane gridPane,GRID;
+    private GridPane gridPane, GRID;
 
     @FXML
-    private TextField PassUPD,SpecialityUPD,SectorUPD,ProUPD,imgUPD,StudyUPD;
+    private TextField PassUPD, SpecialityUPD, SectorUPD, ProUPD, imgUPD, StudyUPD;
 
     @FXML
     private TextField searchIN;
 
-    private int chercherID,chercherUID;
-    private String chercherLong,chercherLit;
+    private int chercherID, chercherUID;
+    private String chercherLong, chercherLit;
 
     @FXML
-    private HBox cardContainer,cardContainerPIE;
+    private HBox cardContainer, cardContainerPIE, cardContainer01;
 
     @FXML
-    private CheckBox studyLevelCheckBox;
+    private AnchorPane rootAnchor;
+
+    @FXML
+    private ScrollPane SS;
+
 
     private List<Intern> internList;
 
     private void displayInterns2(List<Intern> interns) {
         int count = 0;
-         float rt = 0.0f; // Initialize to float
+        float rt = 0.0f; // Initialize to float
         final float rt2;
         cardContainer.getChildren().clear(); // Clear previous content
         for (Intern intern : interns) {
@@ -78,10 +82,9 @@ public class AfficherIntern {
                 new PieChart.Data("Informatique", count),
                 new PieChart.Data("Other Specialities", interns.size() - count)
         );
-        rt2=rt;
+        rt2 = rt;
         PieChart pieChart = new PieChart(pieChartData);
         pieChart.setTitle("Specialities Distribution");
-
 
 
         cardContainer.getChildren().add(pieChart);
@@ -133,47 +136,21 @@ public class AfficherIntern {
                 SectorUPD.setText(intern.getSector());
                 ProUPD.setText(intern.getProcontact());
                 imgUPD.setText(intern.getProfileimage());
-                this.chercherID=intern.getId();
-                this.chercherUID= intern.getUser_id();
-                this.chercherLong=intern.getLongitude();
-                this.chercherLit=intern.getLatitude();
+                this.chercherID = intern.getId();
+                this.chercherUID = intern.getUser_id();
+                this.chercherLong = intern.getLongitude();
+                this.chercherLit = intern.getLatitude();
 
             }
         });
         // Add content to the card
-        card.getChildren().addAll(passportLabel, studyLevelLabel,specialityLabel,SectorLabel,ContactLabel,ImgLabel,deleteButton /* Add more labels or other nodes as needed */);
+        card.getChildren().addAll(passportLabel, studyLevelLabel, specialityLabel, SectorLabel, ContactLabel, ImgLabel, deleteButton /* Add more labels or other nodes as needed */);
 
         // Add event handlers or other configurations as needed
-        updateButton.setOnAction(event -> updateIntern(this.chercherID,this.chercherUID,this.chercherLong,this.chercherLit));
+        updateButton.setOnAction(event -> updateIntern(this.chercherID, this.chercherUID, this.chercherLong, this.chercherLit));
 
         return card;
     }
-
-
-
-   /* private void openEditDialog(Intern intern) {
-        try {
-            // Load the FXML file for the edit dialog
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/EditIntern.fxml"));
-            Parent root = loader.load();
-
-            // Get the controller instance
-            EditIntern controller = loader.getController();
-
-            // Pass the selected intern to the controller
-            controller.initData(intern);
-
-            // Create a new stage for the edit dialog
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Edit Intern");
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }*/
-
-
 
 
     @FXML
@@ -186,17 +163,14 @@ public class AfficherIntern {
     }
 
 
-    public void main() {
-    }
-
-
     public void initialize() {
         displayInterns2(serviceIntern.getAll());
+
     }
 
 
     @FXML
-    private void updateIntern(int x,int y,String z,String w) {
+    private void updateIntern(int x, int y, String z, String w) {
         // Retrieve data from text fields
         String cinPassport = PassUPD.getText();
         String studyLevel = StudyUPD.getText();
@@ -224,8 +198,9 @@ public class AfficherIntern {
 
 
     }
+
     @FXML
-    private void clearField(){
+    private void clearField() {
         PassUPD.clear();
         StudyUPD.clear();
         SpecialityUPD.clear();
@@ -249,8 +224,6 @@ public class AfficherIntern {
     }
 
 
-
-
     @FXML
     void searchIntern() {
         String searchText = searchIN.getText().trim();
@@ -263,39 +236,10 @@ public class AfficherIntern {
                     searchResults.add(intern);
                 }
             }
-            if (searchResults.isEmpty()) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Search Results");
-                alert.setHeaderText(null);
-                alert.setContentText("No interns found matching the search criteria.");
-                alert.showAndWait();
-            } else {
-                // Apply checkbox filter if enabled
-                if (studyLevelCheckBox.isSelected()) {
-                    String selectedStudyLevel = ""; // Get the selected study level
-                    List<Intern> filteredResults = filterInterns(searchResults, selectedStudyLevel);
-                    displayInterns2(filteredResults);
-                } else {
-                    displayInterns2(searchResults);
-                }
-            }
+            displayInterns2(searchResults);
         }
     }
-    private List<Intern> filterInterns(List<Intern> interns, String selectedStudyLevel) {
-        List<Intern> filteredList = new ArrayList<>();
 
-        for (Intern intern : interns) {
-            // Apply study level filter
-            boolean matchesStudyLevel = intern.getStudylevel().equalsIgnoreCase(selectedStudyLevel);
-
-            // Add intern to filtered list if it matches the study level
-            if (matchesStudyLevel) {
-                filteredList.add(intern);
-            }
-        }
-
-        return filteredList;
-    }
 
 
     public static void print(Node nodeToPrint) {
@@ -320,17 +264,16 @@ public class AfficherIntern {
         alert.showAndWait();
     }
 
-    public static void scaleForPrinting(Node node) {
-        double scaleX = 0.8;
-        double scaleY = 0.8;
-        Scale scale = new Scale(scaleX, scaleY);
-        node.getTransforms().add(scale);
-    }
+
+
 
     @FXML
-    void handlePrintButtonAction() {
-        AfficherIntern.print(cardContainer);
+    void handlePrintButtonAction2() {
+        //AfficherIntern.handlePrintButtonAction2(cardContainerPIE);
+        print(SS);
     }
+
+
 }
 
 
@@ -341,6 +284,14 @@ public class AfficherIntern {
 
 
 
+
+
+   /* public static void scaleForPrinting(Node node) {
+        double scaleX = 2.0;
+        double scaleY = 3.0;
+        Scale scale = new Scale(scaleX, scaleY);
+        node.getTransforms().add(scale);
+    }*/
 
 
 
@@ -402,4 +353,27 @@ public class AfficherIntern {
         // Add action to update button
         updateButton.setOnAction(event -> updateIntern(this.chercherID,this.chercherUID,this.chercherLong,this.chercherLit));
     }*/
+ /* private void openEditDialog(Intern intern) {
+        try {
+            // Load the FXML file for the edit dialog
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/EditIntern.fxml"));
+            Parent root = loader.load();
+
+            // Get the controller instance
+            EditIntern controller = loader.getController();
+
+            // Pass the selected intern to the controller
+            controller.initData(intern);
+
+            // Create a new stage for the edit dialog
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Edit Intern");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }*/
+
+
 

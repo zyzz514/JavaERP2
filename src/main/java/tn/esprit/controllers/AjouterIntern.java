@@ -8,14 +8,19 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.util.Duration;
+import org.controlsfx.control.Notifications;
 import tn.esprit.models.Intern;
 import tn.esprit.services.ServiceIntern;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 
 
-
+import java.awt.*;
 import java.io.IOException;
+import org.controlsfx.control.Notifications;
 
 
 public class AjouterIntern {
@@ -89,6 +94,13 @@ public class AjouterIntern {
 
 
                 clearFields();
+                Image img =new Image("/images/check.png");
+                Notifications.create()
+                        .graphic(new ImageView(img))
+                        .title("Ajout Stagiaire")
+                        .text("ajout mis avec success.")
+                        .hideAfter(Duration.seconds(4))
+                        .show();
             }
         } catch (NumberFormatException e) {
             showAlert("Error", "Invalid User ID", "Please enter a valid integer for User ID.");
