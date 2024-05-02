@@ -1,5 +1,6 @@
 package tn.esprit.controllers;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import javafx.scene.Node;
 import javafx.stage.Stage;
@@ -19,6 +20,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import tn.esprit.models.Intern;
 import tn.esprit.services.ServiceIntern;
+
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 
 
 import java.util.ArrayList;
@@ -56,7 +61,7 @@ public class AfficherIntern {
     private ScrollPane SS;
 
 
-    private List<Intern> internList;
+    private List<Intern> internList = new ArrayList<>();
 
     private void displayInterns2(List<Intern> interns) {
         int count = 0;
@@ -270,7 +275,62 @@ public class AfficherIntern {
     @FXML
     void handlePrintButtonAction2() {
         //AfficherIntern.handlePrintButtonAction2(cardContainerPIE);
-        print(SS);
+      //  print(SS);
+        List<Intern> interns = serviceIntern.getAll();
+        generatePDF("src/main/resources/PDF/45.pdf",   interns );
+    }
+
+    @FXML
+    public static void generatePDF(String filePath, List<Intern> interns) {
+        Document document = new Document();
+
+        try {
+            PdfWriter.getInstance(document, new FileOutputStream(filePath));
+            document.open();
+
+
+            // Ajouter le titre
+            Font titleFont = new Font(Font.FontFamily.TIMES_ROMAN, 19, Font.BOLD);
+            Paragraph title = new Paragraph("Liste des Réservations", titleFont);
+            title.setAlignment(Element.ALIGN_CENTER);
+            document.add(title);
+
+            // Ajouter la photo
+          /*  Image image = Image.getInstance("/123.jpg"); // Remplacez "path/vers/votre/photo.jpg" par le chemin de votre photo
+            image.setAlignment(Element.ALIGN_CENTER);
+            image.scaleToFit(2, 2); // Ajustez la taille de l'image selon vos besoins
+            document.add(image);*/
+
+            // Ajouter une table avec les réservations
+            PdfPTable table = new PdfPTable(6);
+            // Ajouter les en-têtes de colonnes
+            table.addCell("Passport");
+            table.addCell("Study Level");
+            table.addCell("Speciality");
+            table.addCell("Sector");
+            table.addCell("Pro Contact");
+            table.addCell("Profile Image");
+
+
+            // Ajouter les données de chaque réservation dans la table
+            for (Intern intern : interns) {
+                table.addCell(intern.getCinPassport());
+                table.addCell(intern.getStudylevel());
+                table.addCell(intern.getSpeciality());
+                table.addCell(intern.getSector());
+                table.addCell(intern.getProcontact());
+                table.addCell(intern.getProfileimage());
+            }
+
+            // Ajouter la table au document
+            document.add(table);
+
+        } catch (DocumentException | IOException e) {
+            e.printStackTrace();
+        } finally {
+            document.close();
+        }
+        System.out.println("ajout pdf succed");
     }
 
 
