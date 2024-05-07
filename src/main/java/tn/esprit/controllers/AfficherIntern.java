@@ -1,9 +1,34 @@
 package tn.esprit.controllers;
 
+
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+
+import com.itextpdf.html2pdf.HtmlConverter;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.Paragraph;
+
+import com.itextpdf.text.pdf.PdfContentByte;
+import com.itextpdf.text.pdf.PdfWriter;
+
+import java.io.InputStream;
+import java.util.List;
+
+
+import com.itextpdf.text.pdf.*;
 import javafx.scene.Node;
+import javafx.scene.SnapshotParameters;
+import javafx.scene.control.TextField;
+import javafx.scene.image.WritableImage;
 import javafx.stage.Stage;
+
+
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,25 +47,20 @@ import tn.esprit.models.Intern;
 import tn.esprit.services.ServiceIntern;
 
 import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
 
 
 import java.util.ArrayList;
-import java.util.List;
 
-import org.controlsfx.control.Notifications;
 
 
 public class AfficherIntern {
 
 
-    private ServiceIntern serviceIntern = new ServiceIntern();
+    private ServiceIntern  serviceIntern = new ServiceIntern();
     @FXML
     private Button ajouter, updateButton;
 
-    @FXML
-    private GridPane gridPane, GRID;
+
 
     @FXML
     private TextField PassUPD, SpecialityUPD, SectorUPD, ProUPD, imgUPD, StudyUPD;
@@ -52,16 +72,8 @@ public class AfficherIntern {
     private String chercherLong, chercherLit;
 
     @FXML
-    private HBox cardContainer, cardContainerPIE, cardContainer01;
+    private HBox cardContainer;
 
-    @FXML
-    private AnchorPane rootAnchor;
-
-    @FXML
-    private ScrollPane SS;
-
-
-    private List<Intern> internList = new ArrayList<>();
 
     private void displayInterns2(List<Intern> interns) {
         int count = 0;
@@ -246,8 +258,7 @@ public class AfficherIntern {
     }
 
 
-
-    public static void print(Node nodeToPrint) {
+   /* public static void print(Node nodeToPrint) {
         PrinterJob printerJob = PrinterJob.createPrinterJob();
         if (printerJob != null && printerJob.showPrintDialog(nodeToPrint.getScene().getWindow())) {
             boolean success = printerJob.printPage(nodeToPrint);
@@ -259,7 +270,7 @@ public class AfficherIntern {
         } else {
             showPrintErrorAlert();
         }
-    }
+    }*/
 
     private static void showPrintErrorAlert() {
         Alert alert = new Alert(AlertType.ERROR);
@@ -270,14 +281,61 @@ public class AfficherIntern {
     }
 
 
-
-
     @FXML
     void handlePrintButtonAction2() {
         //AfficherIntern.handlePrintButtonAction2(cardContainerPIE);
-      //  print(SS);
+        //  print(SS);
         List<Intern> interns = serviceIntern.getAll();
-        generatePDF("src/main/resources/PDF/45.pdf",   interns );
+       // generatePDF("src/main/resources/PDF/45.pdf", interns);
+        genHtml(interns);
+    }
+    @FXML
+    public static void genHtml(List<Intern> interns) {
+        // Define the file path for the HTML template
+        String htmlFilePath = "src/main/resources/templatePDF.html";
+
+        // Read the HTML template file
+        String htmlContent = readHtmlFile(htmlFilePath);
+
+        // Iterate over the list of interns and replace placeholders in the HTML template
+        StringBuilder internRows = new StringBuilder();
+        for (Intern intern : interns) {
+            String row = "<tr>" +
+                    "<td>" + intern.getCinPassport() + "</td>" +
+                    "<td>" + intern.getStudylevel() + "</td>" +
+                    "<td>" + intern.getSpeciality() + "</td>" +
+                    "<td>" + intern.getSector() + "</td>" +
+                    "<td>" + intern.getProcontact() + "</td>" +
+                    "<td>" + intern.getProfileimage() + "</td>" +
+                    "</tr>";
+            internRows.append(row);
+        }
+        // Replace the placeholder in the HTML template with the intern data rows
+        htmlContent = htmlContent.replace("${internRows}", internRows.toString());
+
+        // Define the file path for the PDF
+        String filePath = "src/main/resources/PDF/45.pdf";
+
+        try (FileOutputStream outputStream = new FileOutputStream(filePath)) {
+            // Convert HTML content to PDF and write to file
+            HtmlConverter.convertToPdf(htmlContent, outputStream);
+            System.out.println("PDF created successfully.");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static String readHtmlFile(String filePath) {
+        StringBuilder contentBuilder = new StringBuilder();
+        try (InputStream inputStream = new FileInputStream(filePath)) {
+            int ch;
+            while ((ch = inputStream.read()) != -1) {
+                contentBuilder.append((char) ch);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return contentBuilder.toString();
     }
 
     @FXML
@@ -285,55 +343,181 @@ public class AfficherIntern {
         Document document = new Document();
 
         try {
-            PdfWriter.getInstance(document, new FileOutputStream(filePath));
+            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(filePath));
+
+
             document.open();
 
 
             // Ajouter le titre
-            Font titleFont = new Font(Font.FontFamily.TIMES_ROMAN, 19, Font.BOLD);
-            Paragraph title = new Paragraph("Liste des Réservations", titleFont);
+            Font titleFont = new Font(Font.FontFamily.COURIER, 20, Font.BOLD);
+            Paragraph title = new Paragraph("Liste des Stagiaires", titleFont);
             title.setAlignment(Element.ALIGN_CENTER);
             document.add(title);
 
             // Ajouter la photo
-          /*  Image image = Image.getInstance("/123.jpg"); // Remplacez "path/vers/votre/photo.jpg" par le chemin de votre photo
+            Image image = Image.getInstance("src/main/resources/images/softFire.jpg");
             image.setAlignment(Element.ALIGN_CENTER);
-            image.scaleToFit(2, 2); // Ajustez la taille de l'image selon vos besoins
-            document.add(image);*/
+            image.scaleToFit(150, 150);
+            document.add(image);
 
             // Ajouter une table avec les réservations
             PdfPTable table = new PdfPTable(6);
-            // Ajouter les en-têtes de colonnes
-            table.addCell("Passport");
-            table.addCell("Study Level");
-            table.addCell("Speciality");
-            table.addCell("Sector");
-            table.addCell("Pro Contact");
-            table.addCell("Profile Image");
 
+
+            table.setWidthPercentage(100); // Définir la largeur de la table à 100% de la page
+            table.setSpacingBefore(10f); // Définir l'espace avant la table
+            table.setSpacingAfter(10f); // Définir l'espace après la table
+
+
+            // Ajouter les en-têtes de colonnes
+            table.addCell(createCell("Passport", true));
+            table.addCell(createCell("Study Level", true));
+            table.addCell(createCell("Speciality", true));
+            table.addCell(createCell("Sector", true));
+            table.addCell(createCell("Pro Contact", true));
+            table.addCell(createCell("Profile Image", true));
 
             // Ajouter les données de chaque réservation dans la table
             for (Intern intern : interns) {
-                table.addCell(intern.getCinPassport());
-                table.addCell(intern.getStudylevel());
-                table.addCell(intern.getSpeciality());
-                table.addCell(intern.getSector());
-                table.addCell(intern.getProcontact());
-                table.addCell(intern.getProfileimage());
+                table.addCell(createCell(intern.getCinPassport(), false));
+                table.addCell(createCell(intern.getStudylevel(), false));
+                table.addCell(createCell(intern.getSpeciality(), false));
+                table.addCell(createCell(intern.getSector(), false));
+                table.addCell(createCell(intern.getProcontact(), false));
+                table.addCell(createCell(intern.getProfileimage(), false));
             }
 
             // Ajouter la table au document
             document.add(table);
+
+            PdfContentByte canvas2 = writer.getDirectContent();
+            PdfContentByte canvas = writer.getDirectContentUnder();
+            Rectangle rect = new Rectangle(document.getPageSize());
+            setGradientBackground(canvas, rect, BaseColor.LIGHT_GRAY, BaseColor.WHITE);
+            canvas.rectangle(0, 0, 280, 396);
+            canvas.fill();
+
+
+            drawPageBorder(canvas2, rect);
 
         } catch (DocumentException | IOException e) {
             e.printStackTrace();
         } finally {
             document.close();
         }
-        System.out.println("ajout pdf succed");
+        System.out.println("create pdf succed");
+    }
+   /* public static void generatePDF2(String filePath, List<Intern> interns, Node nodeToPrint) {
+        try (PDDocument document = new PDDocument()) {
+            PDPage page = new PDPage(PDRectangle.A4);
+            document.addPage(page);
+
+            PDPageContentStream contentStream = new PDPageContentStream(document, page);
+
+            // Convert JavaFX scene to image
+            WritableImage image = nodeToImage(nodeToPrint);
+
+            // Convert JavaFX image to PDF image
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+           // ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", baos);
+            baos.flush();
+            baos.close();
+
+           // PDImageXObject pdImage = LosslessFactory.createFromByteArray(document, baos.toByteArray());
+          //  contentStream.drawImage(pdImage, 50, 700);
+
+            // Add other content or text as needed
+            contentStream.setFont(PDType1Font.HELVETICA, 12);
+            contentStream.beginText();
+            contentStream.newLineAtOffset(50, 650);
+            contentStream.showText("Other text or content...");
+            contentStream.endText();
+
+            contentStream.close();
+
+            document.save(filePath);
+            System.out.println("PDF created successfully");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }*/
+
+
+
+    // Helper methods for gradient background and border
+    private static void drawPageBorder2(PdfContentByte canvas, Rectangle rect) {
+        canvas.saveState();
+        canvas.setColorStroke(BaseColor.BLACK); // Set border color
+        canvas.setLineWidth(2.5f); // Set border width
+
+        // Draw border
+        canvas.rectangle(rect.getLeft(), rect.getBottom(), rect.getWidth(), rect.getHeight());
+        canvas.stroke();
+        canvas.restoreState();
+    }
+
+    private static void setGradientBackground2(PdfContentByte canvas, Rectangle rect,
+                                              BaseColor startColor, BaseColor endColor) {
+        float[] fractions = {0.01f, 1.0f};
+        BaseColor[] colors = {startColor, endColor};
+
+        PdfShading axial = PdfShading.simpleAxial(canvas.getPdfWriter(), rect.getLeft(), rect.getBottom(),
+                rect.getRight(), rect.getTop(), startColor, endColor, false, false);
+        PdfShadingPattern shading = new PdfShadingPattern(axial);
+        canvas.setShadingFill(shading);
+        canvas.rectangle(rect.getLeft(), rect.getBottom(), rect.getWidth(), rect.getHeight());
+        canvas.fill();
     }
 
 
+    private static WritableImage nodeToImage(Node node) {
+       // Scene scene = new Scene();
+        WritableImage image = new WritableImage((int) node.getBoundsInLocal().getWidth(), (int) node.getBoundsInLocal().getHeight());
+        node.snapshot(new SnapshotParameters(), image);
+        return image;
+    }
+
+    private static void drawPageBorder(PdfContentByte canvas, Rectangle rect) {
+        canvas.saveState();
+        canvas.setColorStroke(BaseColor.BLACK); // Set border color
+        canvas.setLineWidth(2.5f); // Set border width
+
+        // Draw border
+        canvas.rectangle(rect.getLeft(), rect.getBottom(), rect.getWidth(), rect.getHeight());
+        canvas.stroke();
+        canvas.restoreState();
+    }
+
+    private static void setGradientBackground(PdfContentByte canvas, Rectangle rect,
+                                              BaseColor startColor, BaseColor endColor) {
+        float[] fractions = {0.01f, 1.0f};
+        BaseColor[] colors = {startColor, endColor};
+
+        PdfShading axial = PdfShading.simpleAxial(canvas.getPdfWriter(), rect.getLeft(), rect.getBottom(),
+                rect.getRight(), rect.getTop(), startColor, endColor, false, false);
+        PdfShadingPattern shading = new PdfShadingPattern(axial);
+        canvas.setShadingFill(shading);
+        canvas.rectangle(rect.getLeft(), rect.getBottom(), rect.getWidth(), rect.getHeight());
+        canvas.fill();
+    }
+
+    private static PdfPCell createCell(String content, boolean isHeader) {
+        PdfPCell cell = new PdfPCell(new Phrase(content));
+        cell.setPadding(10);
+        cell.setBorderWidth(0); // Remove cell borders
+        cell.setVerticalAlignment(Element.ALIGN_MIDDLE); // Align content vertically
+
+        if (isHeader) {
+            cell.setBackgroundColor(new BaseColor(54, 43, 179)); // Background color for header cells
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER); // Align content horizontally
+        } else {
+            cell.setBackgroundColor(new BaseColor(255, 255, 255)); // Background color for non-header cells
+        }
+
+        return cell;
+
+    }
 }
 
 

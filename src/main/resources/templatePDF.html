@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste Stagiaires</title>
+</head>
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    th, td {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: left;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+</style>
+<body>
+
+<img src="images/softFire.jpg" alt="Soft Fire Image">
+<h1>Intern Data Report</h1>
+<table>
+    <tr>
+        <th>Passport</th>
+        <th>Study Level</th>
+        <th>Speciality</th>
+        <th>Sector</th>
+        <th>Pro Contact</th>
+        <th>Profile Image</th>
+    </tr>
+    <!-- Intern rows will be dynamically inserted here -->
+    ${internRows}
+</table>
+
+</body>
+</html>

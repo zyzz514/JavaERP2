@@ -13,8 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<?import javafx.scene.control.CheckBox?>
-<AnchorPane minWidth="1000.0" prefHeight="605.0" prefWidth="900.0" stylesheets="css/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.AfficherIntern" fx:id="rootAnchor">
+<AnchorPane fx:id="rootAnchor" minWidth="1000.0" prefHeight="605.0" prefWidth="900.0" stylesheets="css/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.AfficherIntern">
    <children>
       <BorderPane prefHeight="605.0" prefWidth="299.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="665.0" AnchorPane.topAnchor="0.0">
          <left>
@@ -150,7 +149,7 @@
       <AnchorPane layoutX="293.0" layoutY="223.0" prefHeight="500.0" prefWidth="670.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
 
          <children>
-         <ScrollPane fitToHeight="true" fitToWidth="false" layoutX="36.0" prefHeight="263.0" prefWidth="597.0" fx:id="SS">
+         <ScrollPane fx:id="SS" fitToHeight="true" fitToWidth="false" layoutX="36.0" prefHeight="263.0" prefWidth="597.0">
             <VBox>
                <HBox fx:id="cardContainer" alignment="CENTER" spacing="10.0">
                   <!-- You'll dynamically add card elements here -->
@@ -172,7 +171,7 @@
 
 
 
-            <Button fx:id="generatePdfButton" text="Generate PDF Template" onAction="#handlePrintButtonAction2" />
+            <Button fx:id="generatePdfButton" layoutX="266.0" layoutY="321.0" onAction="#handlePrintButtonAction2" stylesheets="@css/style.css" text="Generate PDF Template" />
 
             <Button fx:id="ajouter" layoutX="317.0" layoutY="368.0" mnemonicParsing="false" onAction="#ajouterIntern" stylesheets="@css/style.css" text="Back" />
         <!--    <Button text="Print" onAction="#handlePrintButtonAction" />-->
