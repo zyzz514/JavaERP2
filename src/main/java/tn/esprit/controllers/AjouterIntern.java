@@ -20,6 +20,8 @@ import javafx.scene.Scene;
 
 import java.awt.*;
 import java.io.IOException;
+import java.util.Random;
+
 import org.controlsfx.control.Notifications;
 
 
@@ -37,8 +39,6 @@ public class AjouterIntern {
     @FXML
     private TextField special;
 
-    @FXML
-    private TextField user_id;
 
     @FXML
     private TextField sector;
@@ -71,15 +71,26 @@ public class AjouterIntern {
         stage.show();
     }
 
+    @FXML
+    void FrontOffice() throws IOException {
+        // Load AfficherIntern.fxml
+
+        Parent root = FXMLLoader.load(getClass().getResource("/FrontOffice.fxml"));
+        Stage stage = (Stage) afficher.getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+
 
     @FXML
     void ajouterIntern(ActionEvent event) {
         try {
 
             if (validateInput()) {
-
+                Random rand = new Random();
+                int int_random = rand.nextInt(2) + 1; // Generates a random number between 1 and 2
                 Intern intern = new Intern();
-                intern.setUser_id(Integer.parseInt(user_id.getText()));
+                intern.setUser_id(int_random);
                 intern.setCin_passport(cinP.getText());
                 intern.setStudylevel(studyLeV.getText());
                 intern.setSpeciality(special.getText());
@@ -117,7 +128,7 @@ public class AjouterIntern {
 
     private void clearFields() {
         // Clear all text fields
-        user_id.clear();
+
         cinP.clear();
         studyLeV.clear();
         special.clear();
@@ -130,7 +141,7 @@ public class AjouterIntern {
 
     private boolean validateInput() {
 
-        if (user_id.getText().isEmpty() || cinP.getText().isEmpty() || studyLeV.getText().isEmpty()
+        if ( cinP.getText().isEmpty() || studyLeV.getText().isEmpty()
                 || special.getText().isEmpty() || sector.getText().isEmpty() || procontact.getText().isEmpty()
                 || latitude.getText().isEmpty() || longitude.getText().isEmpty() || profileimage.getText().isEmpty()) {
             showAlert("Error", "Missing Fields", "Please fill in all fields.");

@@ -2,13 +2,19 @@ package tn.esprit.controllers;
 
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import tn.esprit.models.Intern;
 import tn.esprit.services.ServiceIntern;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +23,9 @@ public class FrontOffice {
     @FXML
     private TextField searchIN;
     private ServiceIntern serviceIntern = new ServiceIntern();
+
+    @FXML
+    private Button ajouter;
 
 
 
@@ -59,6 +68,15 @@ public class FrontOffice {
 
 
         return card;
+    }
+
+    @FXML
+    void ajouterIntern() throws IOException {
+        // Load SecondPage.fxml
+        Parent root = FXMLLoader.load(getClass().getResource("/AjouterIntern.fxml"));
+        Stage stage = (Stage) ajouter.getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 
     private void displayInterns2(List<Intern> interns) {

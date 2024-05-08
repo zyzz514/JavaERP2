@@ -5,22 +5,47 @@
     <title>Liste Stagiaires</title>
 </head>
 <style>
+    html {
+        border: 1px solid black;
+        background: linear-gradient(#FFFFFF, #9198e5);
+    }
+
     table {
-        width: 100%;
+        width: 90%;
+        margin: 0 auto;
+        border-radius: 6px;
         border-collapse: collapse;
     }
+
+
     th, td {
         border: 1px solid black;
         padding: 8px;
         text-align: left;
+
     }
+
+
     th {
-        background-color: #f2f2f2;
+        background-color: rgba(34, 43, 129, 0.85);
+        color: white;
+        text-align: center;
+    }
+    img{
+        align-content: center;
+        margin-top: 40px;
+        margin-left: 230px;
+    }
+
+    h1 {
+        text-align: center;
+        color: rgba(34, 43, 129, 0.85);
+        padding: 20px 0;
     }
 </style>
 <body>
 
-<img src="images/softFire.jpg" alt="Soft Fire Image">
+
 <h1>Intern Data Report</h1>
 <table>
     <tr>
@@ -33,7 +58,8 @@
     </tr>
     <!-- Intern rows will be dynamically inserted here -->
     ${internRows}
-</table>
 
+</table>
+<img src="src/main/resources/images/softFire.jpg" alt="Soft Fire Image" width="220px" height="220px" >
 </body>
 </html>
