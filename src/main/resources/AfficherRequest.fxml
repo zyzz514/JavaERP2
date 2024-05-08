@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="rootAnchor" minWidth="1000.0" prefHeight="605.0" prefWidth="900.0" stylesheets="css/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.esprit.controllers.AfficherRequest">
+    <children>
+        <BorderPane prefHeight="605.0" prefWidth="299.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="665.0" AnchorPane.topAnchor="0.0">
+            <left>
+                <VBox prefHeight="606.0" prefWidth="298.0" styleClass="right-bar" stylesheets="@css/style.css" BorderPane.alignment="CENTER">
+                    <children>
+                        <HBox prefHeight="80.0" prefWidth="200.0">
+                            <children>
+                                <Label text="Demande Stage">
+                                    <HBox.margin>
+                                        <Insets bottom="20.0" left="20.0" top="35.0" />
+                                    </HBox.margin>
+                                    <font>
+                                        <Font name="Cambria" size="31.0" />
+                                    </font></Label>
+                            </children>
+                        </HBox>
+                        <VBox prefHeight="400.0" prefWidth="100.0">
+                            <VBox.margin>
+                                <Insets left="20.0" right="20.0" top="80.0" />
+                            </VBox.margin>
+                            <HBox prefHeight="100.0" prefWidth="200.0">
+                                <children>
+                                    <Label text="Cin file" />
+                                    <TextField fx:id="CinUPD" styleClass="updateInput" stylesheets="@css/style.css">
+                                        <HBox.margin>
+                                            <Insets left="22.0" />
+                                        </HBox.margin></TextField>
+                                </children>
+                            </HBox>
+                            <HBox prefHeight="100.0" prefWidth="200.0">
+                                <children>
+                                    <Label text="Cv file" />
+                                    <TextField fx:id="CvUPD" styleClass="updateInput" stylesheets="@css/style.css">
+                                        <HBox.margin>
+                                            <Insets left="28.0" />
+                                        </HBox.margin></TextField>
+                                </children>
+                            </HBox>
+                            <HBox prefHeight="100.0" prefWidth="200.0">
+                                <children>
+                                    <Label text="Reclettre" />
+                                    <TextField fx:id="RecUPD" styleClass="updateInput" stylesheets="@css/style.css">
+                                        <HBox.margin>
+                                            <Insets left="20.0" />
+                                        </HBox.margin></TextField>
+                                </children>
+                            </HBox>
+                           <Button fx:id="updateButton" text="update">
+                               <VBox.margin>
+                                   <Insets left="105.0" right="25.0" />
+                               </VBox.margin>
+                           </Button>
+
+                        </VBox>
+                    </children>
+                </VBox>
+            </left>
+        </BorderPane>
+
+
+
+
+        <HBox alignment="CENTER" layoutX="373.0" layoutY="13.0" prefHeight="90.0" prefWidth="392.0" stylesheets="@css/style.css">
+            <opaqueInsets>
+                <Insets />
+            </opaqueInsets>
+            <children>
+                <TextField fx:id="searchIN" prefWidth="224.0" promptText="search" stylesheets="@css/style.css">
+                    <HBox.margin>
+                        <Insets left="10.0" />
+                    </HBox.margin>
+                    <font>
+                        <Font name="Cambria" size="14.0" />
+                    </font>
+                    <styleClass>
+                        <String fx:value="serach-box" />
+                        <String fx:value="shadow" />
+                    </styleClass>
+                </TextField>
+                <Button mnemonicParsing="false" onAction="#searchReq" prefHeight="26.0" prefWidth="118.0" styleClass="serach-button" stylesheets="@css/style.css" text="Search" textFill="WHITE" />
+            </children>
+            <styleClass>
+                <String fx:value="transparent" />
+                <String fx:value="shadow" />
+            </styleClass>
+        </HBox>
+        <HBox layoutX="305.0" layoutY="132.0" prefHeight="68.0" prefWidth="669.0">
+            <children>
+                <SplitPane orientation="VERTICAL" prefHeight="68.0" prefWidth="673.0">
+                    <items>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="66.0" prefWidth="660.0">
+                            <children>
+
+                                <Label layoutX="215.0" layoutY="21.0" text="Cin file" />
+                                <Label layoutX="318.0" layoutY="21.0" text="Cv file" />
+                                <Label layoutX="430.0" layoutY="21.0" text="Reclettre" />
+
+                            </children>
+
+                        </AnchorPane>
+                    </items>
+                </SplitPane>
+            </children></HBox>
+        <AnchorPane layoutX="293.0" layoutY="223.0" prefHeight="500.0" prefWidth="670.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+
+            <children>
+                <ScrollPane fx:id="SS" fitToHeight="true" fitToWidth="false" layoutX="36.0" prefHeight="263.0" prefWidth="597.0">
+                    <VBox>
+                        <HBox fx:id="cardContainer" alignment="CENTER" spacing="10.0">
+                            <!-- You'll dynamically add card elements here -->
+                        </HBox>
+
+
+                    </VBox>
+
+                </ScrollPane>
+
+
+
+
+
+
+
+                <Button fx:id="ajouter" layoutX="317.0" layoutY="368.0" mnemonicParsing="false" onAction="#ajouterReq" stylesheets="@css/style.css" text="Back" />
+                <!--    <Button text="Print" onAction="#handlePrintButtonAction" />-->
+            </children>
+        </AnchorPane>
+
+
+
+
+
+
+
+    </children>
+
+
+
+</AnchorPane>
